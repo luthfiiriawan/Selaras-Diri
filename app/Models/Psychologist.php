@@ -10,6 +10,8 @@ class Psychologist extends Model
         'name',
         'role',
         'focus',
+        'specialization',
+        'expertise',
         'schedule',
         'price',
         'image_url',

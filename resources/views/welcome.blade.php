@@ -6,6 +6,7 @@
     <meta name="description" content="{{ $settings['hero_subtitle'] }}">
 
     <title>{{ $settings['site_name'] }} | Ruang Bertumbuh dan Pulih</title>
+    <link rel="icon" type="image/svg+xml" href="/images/logo.svg">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -14,8 +15,7 @@
 
     <header class="site-header" aria-label="Navigasi utama">
         <a class="brand" href="#home" aria-label="{{ $settings['site_name'] }}">
-            <span class="brand-mark">SD</span>
-            <span>{{ $settings['site_name'] }}</span>
+            <img src="/images/logo.svg" alt="{{ $settings['site_name'] }}" class="h-10 w-auto">
         </a>
 
         <nav class="nav-links">
@@ -29,6 +29,8 @@
     </header>
 
     <main id="main">
+
+        {{-- Hero --}}
         <section class="hero" id="home">
             <div class="hero-media">
                 <img src="https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&w=1800&q=88" alt="Ruang konseling yang tenang dengan cahaya natural">
@@ -48,6 +50,7 @@
             </aside>
         </section>
 
+        {{-- Value marquee --}}
         <section class="value-marquee" aria-label="Fokus Selaras Diri">
             <div>
                 <span>Mindfulness</span>
@@ -65,6 +68,7 @@
             </div>
         </section>
 
+        {{-- Intro strip --}}
         <section class="section intro-strip reveal-group" aria-label="Ringkasan layanan">
             <div class="reveal">
                 <span>01</span>
@@ -83,6 +87,7 @@
             </div>
         </section>
 
+        {{-- Tentang --}}
         <section class="section split-section reveal" id="tentang">
             <div class="section-label">
                 <p class="eyebrow">{{ $settings['about_title'] }}</p>
@@ -90,13 +95,36 @@
             <div class="section-story">
                 <h2>{{ $settings['about_heading'] }}</h2>
                 <p>{{ $settings['about_body'] }}</p>
-                <figure class="company-showcase reveal">
-                    <img src="/images/canva/company/company-profile-02.png" alt="Company profile Selaras Diri - Tentang Selaras Diri" loading="lazy">
-                    <figcaption>Diambil dari company profile Selaras Diri.</figcaption>
-                </figure>
+
+                <div class="about-highlights reveal">
+                    <div class="about-stat">
+                        <strong>6</strong>
+                        <span>Psikolog Klinis</span>
+                        <p>Siap mendampingi kamu secara personal</p>
+                    </div>
+                    <div class="about-stat">
+                        <strong>3</strong>
+                        <span>Format Sesi</span>
+                        <p>Offline, Online Video Call, dan Voice Call</p>
+                    </div>
+                    <div class="about-stat">
+                        <strong>2</strong>
+                        <span>Lokasi Praktik</span>
+                        <p>Jabarano Laswi (Bandung) dan Cimahi</p>
+                    </div>
+                    <div class="about-stat">
+                        <strong>5+</strong>
+                        <span>Jenis Event</span>
+                        <p>Trekking, Art Therapy, Yoga, Webinar, Support Group</p>
+                    </div>
+                    <div class="about-quote">
+                        <blockquote>"Hidup yang seimbang dan bermakna berawal dari kemampuan hadir sepenuhnya pada momen kini."</blockquote>
+                    </div>
+                </div>
             </div>
         </section>
 
+        {{-- Manifesto --}}
         <section class="section manifesto reveal-group">
             <article class="reveal">
                 <p class="eyebrow">{{ $settings['vision_title'] }}</p>
@@ -108,6 +136,7 @@
             </article>
         </section>
 
+        {{-- Layanan / Pricelist --}}
         <section class="section services reveal" id="layanan">
             <div class="section-heading">
                 <p class="eyebrow">Layanan dan Pricelist</p>
@@ -121,64 +150,71 @@
                         <h3>{{ data_get($package, 'title') }}</h3>
                         <p>{{ data_get($package, 'description') }}</p>
                         <strong>{{ data_get($package, 'price') }}</strong>
+                        <a class="pkg-btn" href="{{ $bookingUrl }}" target="_blank" rel="noopener">Pilih Paket →</a>
                     </article>
                 @endforeach
             </div>
-
-            <div class="price-gallery-shell reveal-group" aria-label="Pricelist psikolog Selaras Diri dari Canva">
-                <div class="price-gallery-copy reveal">
-                    <p class="eyebrow">Pricelist Visual</p>
-                    <h3>Rincian per psikolog dari materi Canva.</h3>
-                    <p>Gambar ini dipakai sebagai sumber visual agar nama psikolog, format sesi, dan biaya layanan tetap selaras dengan materi resmi Selaras Diri.</p>
-                </div>
-
-                <div class="pricing-gallery">
-                    @foreach ($psychologists as $psychologist)
-                        @if (data_get($psychologist, 'image_url'))
-                            <figure class="pricing-preview reveal">
-                                <img src="{{ data_get($psychologist, 'image_url') }}" alt="Pricelist Canva {{ data_get($psychologist, 'name') }}" loading="lazy">
-                                <figcaption>{{ data_get($psychologist, 'name') }}</figcaption>
-                            </figure>
-                        @endif
-                    @endforeach
-                </div>
-            </div>
         </section>
 
-        <section class="section psychologist-section reveal" id="psikolog">
+        {{-- Psikolog --}}
+        <section class="section reveal" id="psikolog">
             <div class="section-heading">
                 <p class="eyebrow">Psikolog</p>
                 <h2>Tim pendamping untuk kebutuhan emosi, relasi, dan keluarga.</h2>
             </div>
 
-            <div class="psychologist-grid reveal-group">
-                @foreach ($psychologists as $psychologist)
-                    <article class="profile-card reveal">
-                        @if (data_get($psychologist, 'image_url'))
-                            <img src="{{ data_get($psychologist, 'image_url') }}" alt="{{ data_get($psychologist, 'name') }}" loading="lazy">
-                        @else
-                            <div class="profile-initial">{{ data_get($psychologist, 'initials') ?: 'SD' }}</div>
-                        @endif
-                        <div>
-                            <span>{{ data_get($psychologist, 'role') }}</span>
-                            <h3>{{ data_get($psychologist, 'name') }}</h3>
-                            <p>{{ data_get($psychologist, 'focus') }}</p>
-                            <dl>
-                                <div>
-                                    <dt>Jadwal</dt>
-                                    <dd>{{ data_get($psychologist, 'schedule') }}</dd>
+            <div class="relative" data-carousel-root>
+                <div data-carousel-track class="psy-scroll -mx-6 flex snap-x snap-mandatory gap-5 overflow-x-auto px-6 pb-6 pt-2 lg:mx-0 lg:px-0" style="scroll-behavior: smooth;">
+                    @foreach ($psychologists as $psychologist)
+                        <article class="psy-card reveal w-[min(82vw,300px)] shrink-0 snap-start">
+                            {{-- Circular photo --}}
+                            <div class="psy-card-photo-wrap">
+                                <div class="psy-card-circle">
+                                    @if (data_get($psychologist, 'image_url'))
+                                        <img src="{{ data_get($psychologist, 'image_url') }}"
+                                             alt="{{ data_get($psychologist, 'name') }}"
+                                             loading="lazy">
+                                    @else
+                                        <span>{{ data_get($psychologist, 'initials') ?: 'SD' }}</span>
+                                    @endif
                                 </div>
-                                <div>
-                                    <dt>Biaya</dt>
-                                    <dd>{{ data_get($psychologist, 'price') }}</dd>
+                            </div>
+
+                            {{-- Info --}}
+                            <div class="psy-card-body">
+                                <p class="psy-card-role">{{ data_get($psychologist, 'role') }}</p>
+                                <h3 class="psy-card-name">{{ data_get($psychologist, 'name') }}</h3>
+
+                                @if (data_get($psychologist, 'specialization'))
+                                    <p class="psy-card-section-label">Spesialisasi</p>
+                                    <p class="psy-card-spec">{{ implode(', ', array_slice(array_map('trim', explode(',', data_get($psychologist, 'specialization'))), 0, 5)) }}</p>
+                                @endif
+
+                                @if (data_get($psychologist, 'expertise'))
+                                    <p class="psy-card-section-label">Keahlian</p>
+                                    <p class="psy-card-spec">{{ data_get($psychologist, 'expertise') }}</p>
+                                @endif
+
+                                <div class="psy-card-footer">
+                                    <div>
+                                        <p class="psy-card-section-label">Lokasi</p>
+                                        <p class="psy-card-location">{{ data_get($psychologist, 'schedule') }}</p>
+                                    </div>
+                                    <p class="psy-card-price">{{ data_get($psychologist, 'price') }}</p>
                                 </div>
-                            </dl>
-                        </div>
-                    </article>
-                @endforeach
+                            </div>
+                        </article>
+                    @endforeach
+                </div>
+
+                <button type="button" data-carousel-prev aria-label="Sebelumnya" class="absolute left-2 top-[42%] z-10 hidden h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-sd-ink/10 bg-white/95 text-lg font-bold text-sd-primary shadow-sd-sm backdrop-blur transition hover:bg-sd-primary hover:text-white disabled:cursor-not-allowed disabled:opacity-30 md:inline-flex lg:-left-5">‹</button>
+                <button type="button" data-carousel-next aria-label="Selanjutnya" class="absolute right-2 top-[42%] z-10 hidden h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-sd-ink/10 bg-white/95 text-lg font-bold text-sd-primary shadow-sd-sm backdrop-blur transition hover:bg-sd-primary hover:text-white disabled:cursor-not-allowed disabled:opacity-30 md:inline-flex lg:-right-5">›</button>
             </div>
+
+            <p class="mt-4 text-center text-xs font-bold uppercase tracking-wide text-sd-muted md:hidden">Geser untuk melihat semua psikolog →</p>
         </section>
 
+        {{-- Booking --}}
         <section class="section booking-panel reveal" id="booking">
             <div>
                 <p class="eyebrow">Booked Konseling</p>
@@ -188,6 +224,7 @@
             <a class="button button-primary" href="{{ $bookingUrl }}" target="_blank" rel="noopener">Chat Admin WhatsApp</a>
         </section>
 
+        {{-- Support Group --}}
         <section class="section support-section reveal-group">
             <div class="support-image reveal">
                 <img src="{{ data_get($supportEvent, 'image_url') }}" alt="{{ data_get($supportEvent, 'title') }}" loading="lazy">
@@ -204,6 +241,7 @@
             </div>
         </section>
 
+        {{-- Event Bulanan --}}
         <section class="section events-section reveal" id="event">
             <div class="section-heading">
                 <p class="eyebrow">Event Bulanan</p>
@@ -213,17 +251,20 @@
             <div class="event-grid reveal-group">
                 @foreach ($monthlyEvents as $event)
                     <article class="event-card reveal">
-                        <img src="{{ data_get($event, 'image_url') }}" alt="{{ data_get($event, 'title') }}" loading="lazy">
+                        <div class="event-card-img">
+                            <img src="{{ data_get($event, 'image_url') }}" alt="{{ data_get($event, 'title') }}" loading="lazy">
+                        </div>
                         <div>
                             <span>{{ data_get($event, 'schedule') }}</span>
                             <h3>{{ data_get($event, 'title') }}</h3>
                             <p>{{ data_get($event, 'description') }}</p>
-                            <a href="{{ $eventUrl }}" target="_blank" rel="noopener">Daftar via WhatsApp</a>
+                            <a href="{{ $eventUrl }}" target="_blank" rel="noopener">Daftar via WhatsApp →</a>
                         </div>
                     </article>
                 @endforeach
             </div>
         </section>
+
     </main>
 
     <footer class="footer">
@@ -233,7 +274,6 @@
             <p>{{ $settings['instagram'] ?? '@selaras_diri' }} &middot; {{ $settings['contact_phone'] ?? '+6282115724455' }} &middot; {{ $settings['email'] ?? 'selarasdiri99@gmail.com' }} &middot; {{ $settings['location'] ?? 'Jabarano Laswi dan Cimahi' }}</p>
         </div>
         <div class="footer-actions">
-            <a href="{{ route('admin.login') }}">CMS</a>
             <a href="{{ $bookingUrl }}" target="_blank" rel="noopener">WhatsApp</a>
         </div>
     </footer>
