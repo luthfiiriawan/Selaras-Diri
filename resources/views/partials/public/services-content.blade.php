@@ -1,36 +1,17 @@
-<section class="section services reveal" id="layanan">
-    <div class="section-heading">
+<section class="mx-auto w-[min(1160px,calc(100%-48px))] pb-24 reveal" id="layanan">
+    <div class="mb-8 grid items-start gap-11 lg:grid-cols-[minmax(160px,0.42fr)_minmax(0,1fr)]">
         <p class="eyebrow">Layanan dan Pricelist</p>
-        <h2>Pilih bentuk pendampingan yang paling sesuai untuk langkah pertama.</h2>
+        <h2 class="text-5xl leading-[1.08]">Pilih bentuk pendampingan yang paling sesuai untuk langkah pertama.</h2>
     </div>
 
-    <div class="package-grid reveal-group">
+    <div class="grid gap-4 reveal-group md:grid-cols-2 xl:grid-cols-3">
         @foreach ($packages as $package)
-            <article class="package-card reveal">
-                <span>{{ data_get($package, 'duration') ?: 'Sesi' }}</span>
-                <h3>{{ data_get($package, 'title') }}</h3>
-                <p>{{ data_get($package, 'description') }}</p>
-                <strong>{{ data_get($package, 'price') }}</strong>
+            <article class="reveal flex min-h-64 flex-col rounded-lg border border-sd-ink/10 bg-sd-surface p-6 shadow-sd-sm transition duration-200 hover:-translate-y-1 hover:shadow-sd-md">
+                <span class="block text-xs font-extrabold uppercase text-sd-rose">{{ data_get($package, 'duration') ?: 'Sesi' }}</span>
+                <h3 class="mt-4 mb-3 text-[1.08rem] leading-tight">{{ data_get($package, 'title') }}</h3>
+                <p class="text-sd-muted leading-[1.72]">{{ data_get($package, 'description') }}</p>
+                <strong class="mt-auto pt-6 text-[1.4rem] text-sd-primary">{{ data_get($package, 'price') }}</strong>
             </article>
         @endforeach
-    </div>
-
-    <div class="price-gallery-shell reveal-group" aria-label="Pricelist psikolog Selaras Diri dari Canva">
-        <div class="price-gallery-copy reveal">
-            <p class="eyebrow">Pricelist Visual</p>
-            <h3>Rincian per psikolog dari materi Canva.</h3>
-            <p>Gambar ini dipakai sebagai sumber visual agar nama psikolog, format sesi, dan biaya layanan tetap selaras dengan materi resmi Selaras Diri.</p>
-        </div>
-
-        <div class="pricing-gallery">
-            @foreach ($psychologists as $psychologist)
-                @if (data_get($psychologist, 'image_url'))
-                    <figure class="pricing-preview reveal">
-                        <img src="{{ data_get($psychologist, 'image_url') }}" alt="Pricelist Canva {{ data_get($psychologist, 'name') }}" loading="lazy">
-                        <figcaption>{{ data_get($psychologist, 'name') }}</figcaption>
-                    </figure>
-                @endif
-            @endforeach
-        </div>
     </div>
 </section>
