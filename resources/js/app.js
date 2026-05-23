@@ -34,3 +34,31 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 });
+
+document.querySelectorAll('[data-carousel-root]').forEach((root) => {
+    const track = root.querySelector('[data-carousel-track]');
+    const prev = root.querySelector('[data-carousel-prev]');
+    const next = root.querySelector('[data-carousel-next]');
+
+    if (!track || !prev || !next) {
+        return;
+    }
+
+    const stepSize = () => {
+        const card = track.querySelector('article');
+        const gap = parseFloat(getComputedStyle(track).columnGap || '20') || 20;
+        return card ? card.offsetWidth + gap : track.clientWidth * 0.8;
+    };
+
+    const updateButtons = () => {
+        const max = track.scrollWidth - track.clientWidth - 4;
+        prev.disabled = track.scrollLeft <= 4;
+        next.disabled = track.scrollLeft >= max;
+    };
+
+    prev.addEventListener('click', () => track.scrollBy({ left: -stepSize(), behavior: 'smooth' }));
+    next.addEventListener('click', () => track.scrollBy({ left: stepSize(), behavior: 'smooth' }));
+    track.addEventListener('scroll', updateButtons, { passive: true });
+    window.addEventListener('resize', updateButtons);
+    updateButtons();
+});
