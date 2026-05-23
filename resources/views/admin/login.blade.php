@@ -4,14 +4,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>CMS Login | Selaras Diri</title>
+    <link rel="icon" type="image/png" href="/images/brand/selaras-diri-logo.png">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="admin-auth">
     <main class="login-shell">
         <section class="login-panel">
             <a class="brand" href="{{ route('home') }}">
-                <span class="brand-mark">SD</span>
-                <span>Selaras Diri CMS</span>
+                <img class="brand-logo" src="/images/brand/selaras-diri-logo-cropped.png" alt="" aria-hidden="true">
+                <span class="brand-text">Selaras Diri CMS</span>
             </a>
 
             <div>

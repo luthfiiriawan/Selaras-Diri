@@ -16,4 +16,11 @@ class ExampleTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    public function test_public_navigation_pages_return_successful_responses(): void
+    {
+        foreach (['/tentang', '/layanan', '/psikolog', '/event'] as $path) {
+            $this->get($path)->assertStatus(200);
+        }
+    }
 }

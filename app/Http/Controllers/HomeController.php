@@ -14,12 +14,72 @@ class HomeController extends Controller
 {
     public function __invoke()
     {
+        return view('welcome', $this->viewData([
+            'activeNav' => 'home',
+            'pageTitle' => 'Ruang Bertumbuh dan Pulih',
+        ]));
+    }
+
+    public function about()
+    {
+        $data = $this->viewData([
+            'activeNav' => 'about',
+            'pageTitle' => 'Tentang Selaras Diri',
+            'pageEyebrow' => 'Tentang Selaras Diri',
+            'pageHeading' => 'Tentang Selaras Diri',
+            'pageBody' => 'Komunitas pengembangan diri yang berfokus pada mindfulness, kepercayaan diri, dan dukungan emosional.',
+        ]);
+
+        return view('pages.about', $data);
+    }
+
+    public function services()
+    {
+        $data = $this->viewData([
+            'activeNav' => 'services',
+            'pageTitle' => 'Layanan dan Pricelist',
+            'pageEyebrow' => 'Layanan dan Pricelist',
+            'pageHeading' => 'Pilih format pendampingan yang sesuai dengan kebutuhanmu.',
+            'pageBody' => 'Detail layanan konseling, bundling, couple counseling, dan asesmen disusun mengikuti pricelist Selaras Diri.',
+        ]);
+
+        return view('pages.services', $data);
+    }
+
+    public function psychologistsPage()
+    {
+        $data = $this->viewData([
+            'activeNav' => 'psychologists',
+            'pageTitle' => 'Psikolog Selaras Diri',
+            'pageEyebrow' => 'Psikolog',
+            'pageHeading' => 'Tim pendamping untuk kebutuhan emosi, relasi, dan keluarga.',
+            'pageBody' => 'Pilih psikolog berdasarkan fokus isu, lokasi, format sesi, dan biaya yang paling sesuai.',
+        ]);
+
+        return view('pages.psychologists', $data);
+    }
+
+    public function events()
+    {
+        $data = $this->viewData([
+            'activeNav' => 'events',
+            'pageTitle' => 'Event Selaras Diri',
+            'pageEyebrow' => 'Event Rutin dan Bulanan',
+            'pageHeading' => 'Aktivitas yang mempertemukan refleksi, tubuh, seni, dan komunitas.',
+            'pageBody' => 'Lihat support group bulanan dan agenda wellness seperti trekking, art therapy, workshop, seminar, yoga, barre, dan padel.',
+        ]);
+
+        return view('pages.events', $data);
+    }
+
+    private function viewData(array $extra = []): array
+    {
         $settings = $this->settings();
         $whatsappNumber = preg_replace('/\D+/', '', $settings['whatsapp_number'] ?? '6281234567890');
         $bookingMessage = rawurlencode($settings['booking_whatsapp_message'] ?? 'Halo Selaras Diri, saya ingin booked konseling. Mohon info jadwal yang tersedia.');
         $eventMessage = rawurlencode($settings['event_whatsapp_message'] ?? 'Halo Selaras Diri, saya ingin daftar event/support group bulan ini.');
 
-        return view('welcome', [
+        return array_merge([
             'settings' => $settings,
             'bookingUrl' => "https://wa.me/{$whatsappNumber}?text={$bookingMessage}",
             'eventUrl' => "https://wa.me/{$whatsappNumber}?text={$eventMessage}",
@@ -27,7 +87,7 @@ class HomeController extends Controller
             'packages' => $this->packages(),
             'supportEvent' => $this->supportEvent(),
             'monthlyEvents' => $this->monthlyEvents(),
-        ]);
+        ], $extra);
     }
 
     public static function defaultSettings(): array
@@ -43,12 +103,12 @@ class HomeController extends Controller
             'hero_title' => 'Hadir penuh, pulih pelan-pelan, bertumbuh bersama.',
             'hero_subtitle' => 'Selaras Diri membantu teman selaras mengenali diri, mengelola emosi, dan menemukan dukungan melalui konseling, workshop, art therapy, dan sharing circle.',
             'about_title' => 'Tentang Selaras Diri',
-            'about_heading' => 'Komunitas pengembangan diri yang berfokus pada mindfulness, kepercayaan diri, dan dukungan emosional.',
-            'about_body' => 'Kami percaya hidup yang seimbang dan bermakna berawal dari kemampuan untuk hadir sepenuhnya pada momen kini. Melalui workshop, pelatihan, konseling, dan ruang praktik bersama, Selaras Diri mengajak individu mengenali diri, mengelola emosi dengan bijak, dan menjadi bagian dari komunitas yang saling mendukung.',
+            'about_heading' => 'Tentang Selaras Diri',
+            'about_body' => 'Selaras Diri adalah sebuah komunitas pengembangan diri yang berfokus pada peningkatan kesadaran melalui pendekatan mindfulness, Kepercayaan diri individu, serta pengembangan jejaring dukungan emosional. Kami percaya bahwa hidup yang seimbang dan bermakna berawal dari kemampuan untuk hadir sepenuhnya dalam momen kini serta kepedulian terhadap kesehatan mental diri dan orang lain. Melalui berbagai workshop, pelatihan, dan ruang praktik bersama, Selaras Diri mengajak individu untuk mengenali diri, mengelola emosi dengan bijak, dan menjadi bagian dari komunitas yang saling mendukung.',
             'vision_title' => 'Visi',
             'vision_body' => 'Menjadi pribadi yang berfokus pada mindfulness, pengembangan diri, kreativitas, dan keseimbangan hidup.',
             'mission_title' => 'Misi',
-            'mission_body' => 'Menyelenggarakan workshop mindfulness, meditasi, art therapy, refleksi diri, pelatihan peer counselor, dan safe space bagi peserta untuk berbagi pengalaman serta saling menguatkan.',
+            'mission_body' => "Menyelenggarakan workshop rutin seputar mindfulness, meditasi, Art Therapy, dan refleksi diri.\nMelatih dan membina peer konselor sebagai pendamping yang mampu memberikan dukungan emosional dasar di komunitasnya.\nMembentuk ruang aman (safe space) bagi peserta untuk berbagi pengalaman dan saling menguatkan.\nMenjalin kolaborasi dengan komunitas atau organisasi yang memiliki kesamaan nilai dan tujuan.",
             'booking_title' => 'Booked konseling dengan admin Tasya.',
             'booking_body' => 'Admin akan membantu memilih psikolog, format sesi online/offline/voice call, lokasi, jadwal, dan paket yang sesuai. Untuk kondisi darurat, segera hubungi layanan krisis atau fasilitas kesehatan terdekat.',
             'booking_whatsapp_message' => 'Halo Tasya, saya ingin booked konseling Selaras Diri. Mohon info jadwal psikolog yang tersedia.',

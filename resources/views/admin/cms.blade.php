@@ -4,13 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>CMS | Selaras Diri</title>
+    <link rel="icon" type="image/png" href="/images/brand/selaras-diri-logo.png">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="admin-site">
     <aside class="admin-sidebar">
         <a class="brand" href="{{ route('home') }}" target="_blank">
-            <span class="brand-mark">SD</span>
-            <span>Selaras Diri</span>
+            <img class="brand-logo" src="/images/brand/selaras-diri-logo-cropped.png" alt="" aria-hidden="true">
+            <span class="brand-text">Selaras Diri</span>
         </a>
         <nav class="admin-nav" aria-label="Navigasi CMS">
             <a href="#konten">Konten</a>
