@@ -6,6 +6,11 @@ use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
+Route::get('/tentang', [HomeController::class, 'about'])->name('about');
+Route::get('/layanan', [HomeController::class, 'services'])->name('services');
+Route::get('/psikolog', [HomeController::class, 'psychologistsPage'])->name('psychologists');
+Route::get('/psikolog/{psychologist}/{slug?}', [HomeController::class, 'psychologistDetail'])->name('psychologists.show');
+Route::get('/event', [HomeController::class, 'events'])->name('events');
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/login', [AuthController::class, 'show'])->name('login');

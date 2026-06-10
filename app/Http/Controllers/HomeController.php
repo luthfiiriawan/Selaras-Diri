@@ -14,12 +14,85 @@ class HomeController extends Controller
 {
     public function __invoke()
     {
+        return view('welcome', $this->viewData([
+            'activeNav' => 'home',
+            'pageTitle' => 'Ruang Bertumbuh dan Pulih',
+        ]));
+    }
+
+    public function about()
+    {
+        $data = $this->viewData([
+            'activeNav' => 'about',
+            'pageTitle' => 'Tentang Selaras Diri',
+            'pageEyebrow' => 'Tentang Selaras Diri',
+            'pageHeading' => 'Tentang Selaras Diri',
+            'pageBody' => 'Komunitas pengembangan diri yang berfokus pada mindfulness, kepercayaan diri, dan dukungan emosional.',
+        ]);
+
+        return view('pages.about', $data);
+    }
+
+    public function services()
+    {
+        $data = $this->viewData([
+            'activeNav' => 'services',
+            'pageTitle' => 'Layanan dan Pricelist',
+            'pageEyebrow' => 'Layanan dan Pricelist',
+            'pageHeading' => 'Pilih format pendampingan yang sesuai dengan kebutuhanmu.',
+            'pageBody' => 'Detail layanan konseling, bundling, couple counseling, dan asesmen disusun mengikuti pricelist Selaras Diri.',
+        ]);
+
+        return view('pages.services', $data);
+    }
+
+    public function psychologistsPage()
+    {
+        $data = $this->viewData([
+            'activeNav' => 'psychologists',
+            'pageTitle' => 'Psikolog Selaras Diri',
+            'pageEyebrow' => 'Psikolog',
+            'pageHeading' => 'Tim pendamping untuk kebutuhan emosi, relasi, dan keluarga.',
+            'pageBody' => 'Pilih psikolog berdasarkan keahlian yang paling sesuai, lalu buka detail profil untuk melihat format sesi dan biaya.',
+        ]);
+
+        return view('pages.psychologists', $data);
+    }
+
+    public function psychologistDetail(Psychologist $psychologist)
+    {
+        abort_unless($psychologist->is_active, 404);
+
+        $data = $this->viewData([
+            'activeNav' => 'psychologists',
+            'pageTitle' => data_get($psychologist, 'name'),
+            'psychologist' => $psychologist,
+        ]);
+
+        return view('pages.psychologist-detail', $data);
+    }
+
+    public function events()
+    {
+        $data = $this->viewData([
+            'activeNav' => 'events',
+            'pageTitle' => 'Event Selaras Diri',
+            'pageEyebrow' => 'Event Rutin dan Bulanan',
+            'pageHeading' => 'Aktivitas yang mempertemukan refleksi, tubuh, seni, dan komunitas.',
+            'pageBody' => 'Lihat support group bulanan dan agenda wellness seperti trekking, art therapy, workshop, seminar, yoga, barre, dan padel.',
+        ]);
+
+        return view('pages.events', $data);
+    }
+
+    private function viewData(array $extra = []): array
+    {
         $settings = $this->settings();
         $whatsappNumber = preg_replace('/\D+/', '', $settings['whatsapp_number'] ?? '6281234567890');
         $bookingMessage = rawurlencode($settings['booking_whatsapp_message'] ?? 'Halo Selaras Diri, saya ingin booked konseling. Mohon info jadwal yang tersedia.');
         $eventMessage = rawurlencode($settings['event_whatsapp_message'] ?? 'Halo Selaras Diri, saya ingin daftar event/support group bulan ini.');
 
-        return view('welcome', [
+        return array_merge([
             'settings' => $settings,
             'bookingUrl' => "https://wa.me/{$whatsappNumber}?text={$bookingMessage}",
             'eventUrl' => "https://wa.me/{$whatsappNumber}?text={$eventMessage}",
@@ -27,28 +100,28 @@ class HomeController extends Controller
             'packages' => $this->packages(),
             'supportEvent' => $this->supportEvent(),
             'monthlyEvents' => $this->monthlyEvents(),
-        ]);
+        ], $extra);
     }
 
     public static function defaultSettings(): array
     {
         return [
             'site_name' => 'Selaras Diri',
-            'whatsapp_number' => '628112224588',
+            'whatsapp_number' => '6282115724455',
             'contact_phone' => '+6282115724455',
-            'instagram' => '@selaras_diri',
+            'instagram' => '@SELARAS_DIRI',
             'email' => 'selarasdiri99@gmail.com',
             'location' => 'Jabarano Laswi dan Cimahi',
             'hero_eyebrow' => 'Mindfulness, konseling psikolog, dan komunitas suportif',
             'hero_title' => 'Hadir penuh, pulih pelan-pelan, bertumbuh bersama.',
             'hero_subtitle' => 'Selaras Diri membantu teman selaras mengenali diri, mengelola emosi, dan menemukan dukungan melalui konseling, workshop, art therapy, dan sharing circle.',
             'about_title' => 'Tentang Selaras Diri',
-            'about_heading' => 'Komunitas pengembangan diri yang berfokus pada mindfulness, kepercayaan diri, dan dukungan emosional.',
-            'about_body' => 'Kami percaya hidup yang seimbang dan bermakna berawal dari kemampuan untuk hadir sepenuhnya pada momen kini. Melalui workshop, pelatihan, konseling, dan ruang praktik bersama, Selaras Diri mengajak individu mengenali diri, mengelola emosi dengan bijak, dan menjadi bagian dari komunitas yang saling mendukung.',
+            'about_heading' => 'Tentang Selaras Diri',
+            'about_body' => 'Selaras Diri adalah sebuah komunitas pengembangan diri yang berfokus pada peningkatan kesadaran melalui pendekatan mindfulness, Kepercayaan diri individu, serta pengembangan jejaring dukungan emosional. Kami percaya bahwa hidup yang seimbang dan bermakna berawal dari kemampuan untuk hadir sepenuhnya dalam momen kini serta kepedulian terhadap kesehatan mental diri dan orang lain. Melalui berbagai workshop, pelatihan, dan ruang praktik bersama, Selaras Diri mengajak individu untuk mengenali diri, mengelola emosi dengan bijak, dan menjadi bagian dari komunitas yang saling mendukung.',
             'vision_title' => 'Visi',
             'vision_body' => 'Menjadi pribadi yang berfokus pada mindfulness, pengembangan diri, kreativitas, dan keseimbangan hidup.',
             'mission_title' => 'Misi',
-            'mission_body' => 'Menyelenggarakan workshop mindfulness, meditasi, art therapy, refleksi diri, pelatihan peer counselor, dan safe space bagi peserta untuk berbagi pengalaman serta saling menguatkan.',
+            'mission_body' => "Menyelenggarakan workshop rutin seputar mindfulness, meditasi, Art Therapy, dan refleksi diri.\nMelatih dan membina peer konselor sebagai pendamping yang mampu memberikan dukungan emosional dasar di komunitasnya.\nMembentuk ruang aman (safe space) bagi peserta untuk berbagi pengalaman dan saling menguatkan.\nMenjalin kolaborasi dengan komunitas atau organisasi yang memiliki kesamaan nilai dan tujuan.",
             'booking_title' => 'Booked konseling dengan admin Tasya.',
             'booking_body' => 'Admin akan membantu memilih psikolog, format sesi online/offline/voice call, lokasi, jadwal, dan paket yang sesuai. Untuk kondisi darurat, segera hubungi layanan krisis atau fasilitas kesehatan terdekat.',
             'booking_whatsapp_message' => 'Halo Tasya, saya ingin booked konseling Selaras Diri. Mohon info jadwal psikolog yang tersedia.',
@@ -94,28 +167,67 @@ class HomeController extends Controller
             [
                 'name' => 'Sarah Dian S.Psi., M.Psi., Psikolog',
                 'role' => 'Psikolog Klinis',
-                'focus' => 'Kecemasan, depresi, stres, trauma, regulasi emosi, self development, relationship, dan gangguan kepribadian. Pendekatan: CBT, ACT, Art Therapy, MBCT, Hypnotherapy, dan DBT.',
-                'schedule' => 'Lokasi: Jabarano Laswi',
-                'price' => 'Offline Rp300.000, online video Rp220.000, voice call Rp170.000',
-                'image_url' => '/images/canva/psychologists/psychologist-02.png',
+                'focus' => 'Mendampingi teman selaras dalam mengenali pola emosi, mengelola kecemasan dan stres, serta membangun relasi yang lebih sehat melalui proses konseling yang aman dan suportif.',
+                'specialization' => 'Kecemasan, Emosi, Stress, Self Development, Relationship, Gangguan Kepribadian',
+                'expertise' => 'Cognitive Behavior Therapy, Acceptance Commitment Therapy, Art Therapy, Group Therapy',
+                'schedule' => 'Offline di Jabarano Laswi, online video call, online voice call',
+                'price' => 'Offline Rp300.000, video call Rp220.000, voice call Rp170.000',
+                'image_url' => '/images/psychologists/sarah-dian.png',
                 'initials' => 'SD',
+            ],
+            [
+                'name' => 'Marina Puspa Ningrum S.Psi., M.Psi., Psikolog',
+                'role' => 'Psikolog Klinis',
+                'focus' => 'Konseling untuk kebutuhan emosi, relasi, dan pengembangan diri di wilayah Cimahi.',
+                'specialization' => 'Kecemasan, Depresi, Stress, Regulasi Emosi, Self Development, Relationship',
+                'expertise' => 'CBT, ACT, Art Therapy',
+                'schedule' => 'Cimahi',
+                'price' => 'Offline Rp300.000 · Video Rp220.000 · Voice Rp170.000',
+                'image_url' => '/images/psychologists/marina-puspa-ningrum.png',
+                'initials' => 'MP',
             ],
             [
                 'name' => 'Astrid Nur Alfaradais, S.Psi. M.Psi., Psikolog',
                 'role' => 'Psikolog Klinis',
-                'focus' => 'Kecemasan, emosi, stres, self development, relationship, dan gangguan kepribadian. Pendekatan: CBT, ACT, Art Therapy, dan Group Therapy.',
-                'schedule' => 'Lokasi: Jabarano Laswi',
-                'price' => 'Offline Rp300.000, online video Rp250.000, voice call Rp200.000',
-                'image_url' => '/images/canva/psychologists/psychologist-04.png',
+                'focus' => 'Mendampingi kebutuhan kecemasan, depresi, stres, trauma, regulasi emosi, pengembangan diri, relationship, dan gangguan kepribadian dengan pendekatan terapi yang suportif.',
+                'specialization' => 'Kecemasan, Depresi, Stress, Trauma, Regulasi Emosi, Self Development, Relationship, Gangguan Kepribadian',
+                'expertise' => 'Cognitive Behavior Therapy, Acceptance Commitment Therapy, Mindfulness Based Cognitive Therapy, Art Therapy, Hypnotherapy, Dialectical Behavior Therapy',
+                'schedule' => 'Offline di Jabarano Laswi, online video call, online voice call',
+                'price' => 'Konsultasi / Konseling Offline|Durasi 1 jam|Rp300.000; Konsultasi / Konseling Online Video Call|Durasi 1 jam|Rp250.000; Konsultasi / Konseling Online Voice Call|Durasi 1 jam|Rp200.000; Bundling Konseling Offline|3 kali pertemuan|Rp850.000; Bundling Konseling Online Video Call|3 kali pertemuan|Rp700.000; Bundling Konseling Couple Offline|Durasi 2 jam|Rp700.000; Bundling Konseling Couple Online Video Call|Durasi 2 jam|Rp500.000; #Minat & Bakat; Test IQ|Tanpa Konsul dengan Psikolog|Rp120.000; Test IQ|Konsul dengan Psikolog|Rp220.000; Test Minat dan Bakat|Test yang diberikan: Grafis test (WZT, BAUM, DAP), RMIB Test, Angket Multiple Intelligences, Angket Gaya Belajar|Rp450.000; Test IQ & Minat Bakat|Test yang diberikan: IST (IQ Test), Grafis test (WZT, BAUM, DAP), RMIB Test, Angket Multiple Intelligences, Angket Gaya Belajar|Rp850.000',
+                'image_url' => '/images/psychologists/astrid-nur-alfaradais.png',
                 'initials' => 'AN',
+            ],
+            [
+                'name' => 'Adelia Octavia, S.Psi. M.Psi., Psikolog',
+                'role' => 'Psikolog Klinis',
+                'focus' => 'Konseling individual dan couple untuk kebutuhan emosi, relasi, serta pengembangan diri.',
+                'specialization' => 'Kecemasan, Stress, Regulasi Emosi, Self Development, Relationship',
+                'expertise' => 'CBT, ACT, Art Therapy',
+                'schedule' => 'Jabarano Laswi',
+                'price' => 'Offline Rp300.000 · Video Rp250.000 · Voice Rp200.000',
+                'image_url' => '/images/psychologists/adelia-octavia.png',
+                'initials' => 'AO',
+            ],
+            [
+                'name' => 'Alinda Destiana S.Psi., M.Psi., Psikolog',
+                'role' => 'Psikolog Anak dan Remaja',
+                'focus' => 'Mendampingi permasalahan emosi pada anak dan remaja, sosial anak, relasi anak dan orang tua, asesmen kesiapan sekolah, permasalahan klinis anak, serta diskusi pola pengasuhan.',
+                'specialization' => 'Permasalahan Emosi pada anak dan remaja, Permasalahan sosial pada anak, Permasalahan relasi anak dan orang tua, Asesmen kesiapan sekolah, Permasalahan klinis pada anak, Diskusi mengenai pola pengasuhan',
+                'expertise' => 'Psikoterapi, Pendekatan Montessori, Terapi Keluarga, Montessorian, Behavior Modification',
+                'schedule' => 'Offline di Jabarano Laswi, online video call, online voice call',
+                'price' => 'Konsultasi / Konseling Offline|Durasi 1 jam|Rp300.000; Konsultasi / Konseling Online Video Call|Durasi 1 jam|Rp250.000; Konsultasi / Konseling Online Voice Call|Durasi 1 jam|Rp200.000; Bundling Konseling Offline|3 kali pertemuan|Rp850.000; Bundling Konseling Online Video Call|3 kali pertemuan|Rp700.000; Bundling Konseling Couple Offline|Durasi 2 jam|Rp700.000; Bundling Konseling Couple Online Video Call|Durasi 2 jam|Rp500.000',
+                'image_url' => '/images/psychologists/alinda-destiana.png',
+                'initials' => 'AD',
             ],
             [
                 'name' => 'Cinta Retsa Ferdiana, S.Psi. M.Psi., Psikolog',
                 'role' => 'Psikolog Klinis',
-                'focus' => 'Relationship, hubungan personal/interpersonal, kecemasan, depresi, regulasi emosi, self growth, self-love, self-harm, parenting, dan keluarga.',
-                'schedule' => 'Online',
-                'price' => 'Online video Rp220.000, voice call Rp170.000',
-                'image_url' => '/images/canva/psychologists/psychologist-07.png',
+                'focus' => 'Mendampingi kebutuhan relationship, hubungan personal/interpersonal, kecemasan, depresi, regulasi emosi, self growth, self development, self-love, self-harm, parenting, dan keluarga melalui sesi online yang suportif.',
+                'specialization' => 'Relationship, Hubungan Personal / Interpersonal, Kecemasan, Depresi, Regulasi Emosi, Self Growth, Self Development, Self-Love, Self-Harm, Parenting & Keluarga',
+                'expertise' => 'Cognitive Behavior Therapy, Emphatic Love Therapy (ELT), Mindfulness Based Cognitive Therapy, Art Therapy, Dialectical Behavior Therapy',
+                'schedule' => 'Online video call, online voice call',
+                'price' => 'Konsultasi / Konseling Online Video Call|Durasi 1 jam|Rp220.000; Konsultasi / Konseling Online Voice Call|Durasi 1 jam|Rp170.000; Bundling Konseling Online Video Call|3 kali pertemuan|Rp610.000; Bundling Konseling Couple Online Video Call|3 kali pertemuan|Rp440.000',
+                'image_url' => '/images/psychologists/cinta-retsa-ferdiana.png',
                 'initials' => 'CR',
             ],
         ]);
@@ -261,7 +373,7 @@ class HomeController extends Controller
             'title' => 'Support Group Bulanan',
             'description' => 'Sebuah ruang aman untuk saling mendengar dan menguatkan. Dipandu fasilitator atau psikolog, peserta dapat berbagi pengalaman, menemukan perspektif baru, dan mendapat dukungan karena perjalanan pulih lebih ringan saat ditempuh bersama.',
             'schedule' => 'Awal bulan, kuota terbatas',
-            'image_url' => '/images/canva/company/company-profile-04.png',
+            'image_url' => 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=900&q=80',
             'booking_message' => 'Daftar Support Group',
         ];
     }
@@ -299,20 +411,20 @@ class HomeController extends Controller
                 'image_url' => 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=900&q=80',
             ],
             [
-                'title' => 'Workshop Mindfulness',
+                'title' => 'Workshop Mindfulness & Self-Awareness',
                 'description' => 'Experiential learning untuk melatih kehadiran penuh, pengenalan emosi, dan teknik pengelolaan stres.',
                 'schedule' => 'Bulanan',
                 'image_url' => 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=900&q=80',
             ],
             [
-                'title' => 'Seminar dan Webinar Psikoedukasi',
-                'description' => 'Diskusi psikologi bersama praktisi untuk memperluas literasi kesehatan mental yang mudah diterapkan sehari-hari.',
+                'title' => 'Seminar & Webinar Psikoedukasi',
+                'description' => 'Seminar dan webinar bersama praktisi untuk memperluas literasi kesehatan mental yang mudah diterapkan sehari-hari.',
                 'schedule' => 'Bulanan',
                 'image_url' => 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80',
             ],
             [
                 'title' => 'Barre, Yoga, dan Padel Session',
-                'description' => 'Aktivitas tubuh yang menyatukan gerak, ritme, dan komunitas untuk menjaga keseimbangan.',
+                'description' => 'Aktivitas tubuh yang menyatukan gerak, ritme, dan komunitas lewat barre, yoga, dan padel untuk menjaga keseimbangan tubuh dan pikiran.',
                 'schedule' => 'Bulanan',
                 'image_url' => 'https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?auto=format&fit=crop&w=900&q=80',
             ],
