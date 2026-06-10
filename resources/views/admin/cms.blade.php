@@ -9,6 +9,11 @@
 </head>
 <body class="min-h-dvh bg-sd-paper text-sd-ink">
 
+@php
+    $psychologistPriceHint = 'Format: Nama layanan|Detail/durasi|Harga; pisahkan tiap item dengan titik koma. Untuk judul kategori gunakan #Nama Kategori; sebelum item baru.';
+    $psychologistPricePlaceholder = 'Konsultasi / Konseling Offline|Durasi 1 jam|Rp300.000; #Minat & Bakat; Test IQ|Tanpa Konsul dengan Psikolog|Rp120.000';
+@endphp
+
 {{-- Sidebar --}}
 <aside class="fixed inset-y-0 left-0 z-30 flex w-[280px] flex-col gap-6 overflow-y-auto border-r border-sd-ink/10 bg-sd-surface p-7 max-md:static max-md:w-full max-md:border-b max-md:border-r-0">
     <a class="w-fit" href="{{ route('home') }}" target="_blank" title="Buka website">
@@ -120,7 +125,11 @@
                     <label class="grid gap-2 text-sm font-extrabold text-sd-ink-soft md:col-span-2"><span>Spesialisasi <span class="font-normal text-sd-muted">pisahkan dengan koma</span></span><textarea class="min-h-12 w-full resize-y rounded-lg border border-sd-ink/10 bg-[#fff8f4] px-3.5 py-3 font-semibold leading-relaxed text-sd-ink" name="specialization" rows="2" placeholder="Kecemasan, Depresi, Trauma, ..."></textarea></label>
                     <label class="grid gap-2 text-sm font-extrabold text-sd-ink-soft md:col-span-2"><span>Keahlian / metode <span class="font-normal text-sd-muted">pisahkan dengan koma</span></span><textarea class="min-h-12 w-full resize-y rounded-lg border border-sd-ink/10 bg-[#fff8f4] px-3.5 py-3 font-semibold leading-relaxed text-sd-ink" name="expertise" rows="2" placeholder="CBT, ACT, Art Therapy, ..."></textarea></label>
                     <label class="grid gap-2 text-sm font-extrabold text-sd-ink-soft"><span>Lokasi / Jadwal</span><input class="min-h-12 w-full rounded-lg border border-sd-ink/10 bg-[#fff8f4] px-3.5 py-3 font-semibold text-sd-ink" name="schedule" placeholder="Jabarano Laswi"></label>
-                    <label class="grid gap-2 text-sm font-extrabold text-sd-ink-soft"><span>Biaya sesi</span><input class="min-h-12 w-full rounded-lg border border-sd-ink/10 bg-[#fff8f4] px-3.5 py-3 font-semibold text-sd-ink" name="price" placeholder="Offline Rp300.000 · Video Rp220.000"></label>
+                    <label class="grid gap-2 text-sm font-extrabold text-sd-ink-soft md:col-span-2">
+                        <span>Biaya sesi <span class="font-normal text-sd-muted">format detail halaman psikolog</span></span>
+                        <textarea class="min-h-12 w-full resize-y rounded-lg border border-sd-ink/10 bg-[#fff8f4] px-3.5 py-3 font-semibold leading-relaxed text-sd-ink" name="price" rows="4" placeholder="{{ $psychologistPricePlaceholder }}"></textarea>
+                        <span class="text-xs font-semibold leading-relaxed text-sd-muted">{{ $psychologistPriceHint }}</span>
+                    </label>
                     <div class="md:col-span-2">
                         <p class="mb-2 text-sm font-extrabold text-sd-ink-soft">Foto psikolog</p>
                         @include('admin.partials.image-upload', ['id' => 'new-psy', 'existing' => null])
@@ -170,7 +179,11 @@
                                     <label class="grid gap-2 text-sm font-extrabold text-sd-ink-soft md:col-span-2"><span>Spesialisasi <span class="font-normal text-sd-muted">pisahkan dengan koma</span></span><textarea class="min-h-12 w-full resize-y rounded-lg border border-sd-ink/10 bg-[#fff8f4] px-3.5 py-3 font-semibold leading-relaxed text-sd-ink" name="specialization" rows="2">{{ $psychologist->specialization }}</textarea></label>
                                     <label class="grid gap-2 text-sm font-extrabold text-sd-ink-soft md:col-span-2"><span>Keahlian / metode <span class="font-normal text-sd-muted">pisahkan dengan koma</span></span><textarea class="min-h-12 w-full resize-y rounded-lg border border-sd-ink/10 bg-[#fff8f4] px-3.5 py-3 font-semibold leading-relaxed text-sd-ink" name="expertise" rows="2">{{ $psychologist->expertise }}</textarea></label>
                                     <label class="grid gap-2 text-sm font-extrabold text-sd-ink-soft"><span>Lokasi / Jadwal</span><input class="min-h-12 w-full rounded-lg border border-sd-ink/10 bg-[#fff8f4] px-3.5 py-3 font-semibold text-sd-ink" name="schedule" value="{{ $psychologist->schedule }}"></label>
-                                    <label class="grid gap-2 text-sm font-extrabold text-sd-ink-soft"><span>Biaya sesi</span><input class="min-h-12 w-full rounded-lg border border-sd-ink/10 bg-[#fff8f4] px-3.5 py-3 font-semibold text-sd-ink" name="price" value="{{ $psychologist->price }}"></label>
+                                    <label class="grid gap-2 text-sm font-extrabold text-sd-ink-soft md:col-span-2">
+                                        <span>Biaya sesi <span class="font-normal text-sd-muted">format detail halaman psikolog</span></span>
+                                        <textarea class="min-h-12 w-full resize-y rounded-lg border border-sd-ink/10 bg-[#fff8f4] px-3.5 py-3 font-semibold leading-relaxed text-sd-ink" name="price" rows="4" placeholder="{{ $psychologistPricePlaceholder }}">{{ $psychologist->price }}</textarea>
+                                        <span class="text-xs font-semibold leading-relaxed text-sd-muted">{{ $psychologistPriceHint }}</span>
+                                    </label>
                                     <div class="md:col-span-2">
                                         <p class="mb-2 text-sm font-extrabold text-sd-ink-soft">Foto psikolog</p>
                                         @include('admin.partials.image-upload', ['id' => 'psy-'.$psychologist->id, 'existing' => $psychologist->image_url])

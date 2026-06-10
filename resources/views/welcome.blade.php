@@ -59,7 +59,7 @@
                     [$psychologists->count(), 'Psikolog klinis & anak-remaja'],
                     [$packages->count(), 'Pilihan layanan & paket'],
                     [$monthlyEvents->count() + 1, 'Agenda rutin tiap bulan'],
-                    ['2', 'Lokasi · Laswi & Cimahi'],
+                    ['3', 'Format sesi konseling'],
                 ];
             @endphp
             @foreach ($stats as [$num, $label])
@@ -151,5 +151,4 @@
     </section>
 
     {{-- Closing CTA --}}
-    @include('partials.public.booking-panel')
 @endsection

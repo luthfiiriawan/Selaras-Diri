@@ -154,7 +154,7 @@ class CmsController extends Controller
             'specialization' => ['nullable', 'string'],
             'expertise'      => ['nullable', 'string'],
             'schedule'       => ['nullable', 'string', 'max:255'],
-            'price'          => ['nullable', 'string', 'max:255'],
+            'price'          => ['nullable', 'string'],
             'image'          => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
             'image_url_fallback' => ['nullable', 'string', 'max:500'],
             'sort_order'     => ['nullable', 'integer', 'min:0', 'max:999'],

@@ -53,10 +53,23 @@ class HomeController extends Controller
             'pageTitle' => 'Psikolog Selaras Diri',
             'pageEyebrow' => 'Psikolog',
             'pageHeading' => 'Tim pendamping untuk kebutuhan emosi, relasi, dan keluarga.',
-            'pageBody' => 'Pilih psikolog berdasarkan fokus isu, lokasi, format sesi, dan biaya yang paling sesuai.',
+            'pageBody' => 'Pilih psikolog berdasarkan keahlian yang paling sesuai, lalu buka detail profil untuk melihat format sesi dan biaya.',
         ]);
 
         return view('pages.psychologists', $data);
+    }
+
+    public function psychologistDetail(Psychologist $psychologist)
+    {
+        abort_unless($psychologist->is_active, 404);
+
+        $data = $this->viewData([
+            'activeNav' => 'psychologists',
+            'pageTitle' => data_get($psychologist, 'name'),
+            'psychologist' => $psychologist,
+        ]);
+
+        return view('pages.psychologist-detail', $data);
     }
 
     public function events()
@@ -154,11 +167,11 @@ class HomeController extends Controller
             [
                 'name' => 'Sarah Dian S.Psi., M.Psi., Psikolog',
                 'role' => 'Psikolog Klinis',
-                'focus' => 'Pendamping untuk berbagai kebutuhan emosi, relasi, dan pemulihan diri dengan pendekatan integratif.',
-                'specialization' => 'Kecemasan, Depresi, Stress, Trauma, Regulasi Emosi, Self Development, Relationship, Gangguan Kepribadian',
-                'expertise' => 'CBT, ACT, Art Therapy, MBCT, Hypnotherapy, DBT',
-                'schedule' => 'Jabarano Laswi',
-                'price' => 'Offline Rp300.000 · Video Rp220.000 · Voice Rp170.000',
+                'focus' => 'Mendampingi teman selaras dalam mengenali pola emosi, mengelola kecemasan dan stres, serta membangun relasi yang lebih sehat melalui proses konseling yang aman dan suportif.',
+                'specialization' => 'Kecemasan, Emosi, Stress, Self Development, Relationship, Gangguan Kepribadian',
+                'expertise' => 'Cognitive Behavior Therapy, Acceptance Commitment Therapy, Art Therapy, Group Therapy',
+                'schedule' => 'Offline di Jabarano Laswi, online video call, online voice call',
+                'price' => 'Offline Rp300.000, video call Rp220.000, voice call Rp170.000',
                 'image_url' => '/images/psychologists/sarah-dian.png',
                 'initials' => 'SD',
             ],
@@ -176,12 +189,12 @@ class HomeController extends Controller
             [
                 'name' => 'Astrid Nur Alfaradais, S.Psi. M.Psi., Psikolog',
                 'role' => 'Psikolog Klinis',
-                'focus' => 'Pendamping untuk pemulihan kecemasan, stres, dan dinamika relasi dengan pendekatan group dan art therapy.',
-                'specialization' => 'Kecemasan, Emosi, Stress, Self Development, Relationship, Gangguan Kepribadian',
-                'expertise' => 'CBT, ACT, Art Therapy, Group Therapy',
-                'schedule' => 'Jabarano Laswi',
-                'price' => 'Offline Rp300.000 · Video Rp250.000 · Voice Rp200.000',
-                'image_url' => null,
+                'focus' => 'Mendampingi kebutuhan kecemasan, depresi, stres, trauma, regulasi emosi, pengembangan diri, relationship, dan gangguan kepribadian dengan pendekatan terapi yang suportif.',
+                'specialization' => 'Kecemasan, Depresi, Stress, Trauma, Regulasi Emosi, Self Development, Relationship, Gangguan Kepribadian',
+                'expertise' => 'Cognitive Behavior Therapy, Acceptance Commitment Therapy, Mindfulness Based Cognitive Therapy, Art Therapy, Hypnotherapy, Dialectical Behavior Therapy',
+                'schedule' => 'Offline di Jabarano Laswi, online video call, online voice call',
+                'price' => 'Konsultasi / Konseling Offline|Durasi 1 jam|Rp300.000; Konsultasi / Konseling Online Video Call|Durasi 1 jam|Rp250.000; Konsultasi / Konseling Online Voice Call|Durasi 1 jam|Rp200.000; Bundling Konseling Offline|3 kali pertemuan|Rp850.000; Bundling Konseling Online Video Call|3 kali pertemuan|Rp700.000; Bundling Konseling Couple Offline|Durasi 2 jam|Rp700.000; Bundling Konseling Couple Online Video Call|Durasi 2 jam|Rp500.000; #Minat & Bakat; Test IQ|Tanpa Konsul dengan Psikolog|Rp120.000; Test IQ|Konsul dengan Psikolog|Rp220.000; Test Minat dan Bakat|Test yang diberikan: Grafis test (WZT, BAUM, DAP), RMIB Test, Angket Multiple Intelligences, Angket Gaya Belajar|Rp450.000; Test IQ & Minat Bakat|Test yang diberikan: IST (IQ Test), Grafis test (WZT, BAUM, DAP), RMIB Test, Angket Multiple Intelligences, Angket Gaya Belajar|Rp850.000',
+                'image_url' => '/images/psychologists/astrid-nur-alfaradais.png',
                 'initials' => 'AN',
             ],
             [
@@ -197,24 +210,24 @@ class HomeController extends Controller
             ],
             [
                 'name' => 'Alinda Destiana S.Psi., M.Psi., Psikolog',
-                'role' => 'Psikolog Anak & Remaja',
-                'focus' => 'Mendampingi permasalahan emosi, sosial, dan klinis anak/remaja serta diskusi pola pengasuhan keluarga.',
-                'specialization' => 'Emosi Anak & Remaja, Sosial Anak, Relasi Anak-Orang Tua, Asesmen Kesiapan Sekolah, Klinis Anak, Pola Pengasuhan',
-                'expertise' => 'Psikoterapi, Pendekatan Montessori, Terapi Keluarga, Behavior Modification',
-                'schedule' => 'Jabarano Laswi',
-                'price' => 'Offline Rp300.000 · Video Rp250.000 · Voice Rp200.000',
+                'role' => 'Psikolog Anak dan Remaja',
+                'focus' => 'Mendampingi permasalahan emosi pada anak dan remaja, sosial anak, relasi anak dan orang tua, asesmen kesiapan sekolah, permasalahan klinis anak, serta diskusi pola pengasuhan.',
+                'specialization' => 'Permasalahan Emosi pada anak dan remaja, Permasalahan sosial pada anak, Permasalahan relasi anak dan orang tua, Asesmen kesiapan sekolah, Permasalahan klinis pada anak, Diskusi mengenai pola pengasuhan',
+                'expertise' => 'Psikoterapi, Pendekatan Montessori, Terapi Keluarga, Montessorian, Behavior Modification',
+                'schedule' => 'Offline di Jabarano Laswi, online video call, online voice call',
+                'price' => 'Konsultasi / Konseling Offline|Durasi 1 jam|Rp300.000; Konsultasi / Konseling Online Video Call|Durasi 1 jam|Rp250.000; Konsultasi / Konseling Online Voice Call|Durasi 1 jam|Rp200.000; Bundling Konseling Offline|3 kali pertemuan|Rp850.000; Bundling Konseling Online Video Call|3 kali pertemuan|Rp700.000; Bundling Konseling Couple Offline|Durasi 2 jam|Rp700.000; Bundling Konseling Couple Online Video Call|Durasi 2 jam|Rp500.000',
                 'image_url' => '/images/psychologists/alinda-destiana.png',
                 'initials' => 'AD',
             ],
             [
                 'name' => 'Cinta Retsa Ferdiana, S.Psi. M.Psi., Psikolog',
                 'role' => 'Psikolog Klinis',
-                'focus' => 'Pendamping online untuk kebutuhan relasi, self growth, parenting, dan pemulihan emosi.',
-                'specialization' => 'Relationship, Hubungan Personal/Interpersonal, Kecemasan, Depresi, Regulasi Emosi, Self Growth, Self-Love, Self-Harm, Parenting & Keluarga',
-                'expertise' => 'CBT, Empathic Love Therapy (ELT), Art Therapy, MBCT, DBT',
-                'schedule' => 'Online',
-                'price' => 'Video Rp220.000 · Voice Rp170.000',
-                'image_url' => null,
+                'focus' => 'Mendampingi kebutuhan relationship, hubungan personal/interpersonal, kecemasan, depresi, regulasi emosi, self growth, self development, self-love, self-harm, parenting, dan keluarga melalui sesi online yang suportif.',
+                'specialization' => 'Relationship, Hubungan Personal / Interpersonal, Kecemasan, Depresi, Regulasi Emosi, Self Growth, Self Development, Self-Love, Self-Harm, Parenting & Keluarga',
+                'expertise' => 'Cognitive Behavior Therapy, Emphatic Love Therapy (ELT), Mindfulness Based Cognitive Therapy, Art Therapy, Dialectical Behavior Therapy',
+                'schedule' => 'Online video call, online voice call',
+                'price' => 'Konsultasi / Konseling Online Video Call|Durasi 1 jam|Rp220.000; Konsultasi / Konseling Online Voice Call|Durasi 1 jam|Rp170.000; Bundling Konseling Online Video Call|3 kali pertemuan|Rp610.000; Bundling Konseling Couple Online Video Call|3 kali pertemuan|Rp440.000',
+                'image_url' => '/images/psychologists/cinta-retsa-ferdiana.png',
                 'initials' => 'CR',
             ],
         ]);
