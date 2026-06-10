@@ -1,7 +1,7 @@
-<section class="mx-auto w-[min(1160px,calc(100%-48px))] pb-24 reveal" id="layanan">
+<section class="mx-auto w-[min(1160px,calc(100%-48px))] pb-16 reveal sm:pb-24" id="layanan">
     <div class="mb-8 grid items-start gap-11 lg:grid-cols-[minmax(160px,0.42fr)_minmax(0,1fr)]">
         <p class="eyebrow">Layanan dan Pricelist</p>
-        <h2 class="text-5xl leading-[1.08]">Pilih bentuk pendampingan yang paling sesuai untuk langkah pertama.</h2>
+        <h2 class="text-3xl leading-[1.12] sm:text-4xl lg:text-5xl lg:leading-[1.08]">Pilih bentuk pendampingan yang paling sesuai untuk langkah pertama.</h2>
     </div>
 
     <div class="grid gap-4 reveal-group md:grid-cols-2 xl:grid-cols-3">

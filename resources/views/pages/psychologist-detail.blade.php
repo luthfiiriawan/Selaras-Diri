@@ -114,7 +114,7 @@
             <div class="grid gap-5">
                 <section class="rounded-lg border border-sd-ink/10 bg-sd-surface p-6 shadow-sd-sm lg:p-8">
                     <p class="eyebrow">Profil psikolog</p>
-                    <h2 class="max-w-[760px] text-5xl leading-[1.06]">Kenali fokus pendampingan dan metode sesi.</h2>
+                    <h2 class="max-w-[760px] text-2xl leading-[1.12] sm:text-3xl lg:text-5xl lg:leading-[1.06]">Kenali fokus pendampingan dan metode sesi.</h2>
 
                     <div class="mt-8 grid gap-5 md:grid-cols-2">
                         <div class="rounded-lg border border-sd-ink/10 bg-sd-paper/45 p-5">

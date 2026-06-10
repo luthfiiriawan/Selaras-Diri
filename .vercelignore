@@ -7,6 +7,9 @@
 .env.*
 auth.json
 
+# Pakai Neon Postgres di produksi, jangan ikut bawa SQLite lokal
+/database/*.sqlite
+
 # Dev junk
 /.git
 /.github

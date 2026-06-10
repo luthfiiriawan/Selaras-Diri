@@ -1,11 +1,11 @@
 {{-- Support group --}}
-<section class="mx-auto grid w-[min(1160px,calc(100%-48px))] items-center gap-9 py-24 reveal-group lg:grid-cols-[minmax(320px,0.82fr)_minmax(0,1fr)]">
+<section class="mx-auto grid w-[min(1160px,calc(100%-48px))] items-center gap-9 py-14 reveal-group sm:py-24 lg:grid-cols-[minmax(320px,0.82fr)_minmax(0,1fr)]">
     <div class="reveal">
         <img class="aspect-[4/5] w-full rounded-lg object-cover shadow-sd-md" src="{{ data_get($supportEvent, 'image_url') }}" alt="{{ data_get($supportEvent, 'title') }}" loading="lazy">
     </div>
     <div class="py-5 reveal">
         <p class="eyebrow">Event Rutin</p>
-        <h2 class="text-5xl leading-[1.08]">{{ data_get($supportEvent, 'title') }}</h2>
+        <h2 class="text-3xl leading-[1.12] sm:text-4xl lg:text-5xl lg:leading-[1.08]">{{ data_get($supportEvent, 'title') }}</h2>
         <p class="mt-4 max-w-[660px] text-sd-muted leading-[1.72]">{{ data_get($supportEvent, 'description') }}</p>
         <div class="my-6 rounded-lg border border-sd-ink/10 border-l-4 border-l-sd-gold bg-sd-surface p-5">
             <span class="block text-xs font-extrabold uppercase text-sd-rose">Jadwal</span>
@@ -16,10 +16,10 @@
 </section>
 
 {{-- Event bulanan --}}
-<section class="mx-auto w-[min(1160px,calc(100%-48px))] pb-24 reveal" id="event">
+<section class="mx-auto w-[min(1160px,calc(100%-48px))] pb-16 reveal sm:pb-24" id="event">
     <div class="mb-8 grid items-start gap-11 lg:grid-cols-[minmax(160px,0.42fr)_minmax(0,1fr)]">
         <p class="eyebrow">Event Bulanan</p>
-        <h2 class="text-5xl leading-[1.08]">Aktivitas yang mempertemukan refleksi, tubuh, seni, dan komunitas.</h2>
+        <h2 class="text-3xl leading-[1.12] sm:text-4xl lg:text-5xl lg:leading-[1.08]">Aktivitas yang mempertemukan refleksi, tubuh, seni, dan komunitas.</h2>
     </div>
 
     <div class="grid gap-4 reveal-group md:grid-cols-2 xl:grid-cols-5">

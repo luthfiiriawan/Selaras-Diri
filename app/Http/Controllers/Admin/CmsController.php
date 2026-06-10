@@ -128,14 +128,20 @@ class CmsController extends Controller
             $file = $request->file($fileField);
             $dir = public_path('images/uploads');
 
-            if (! is_dir($dir)) {
-                mkdir($dir, 0755, true);
+            // On read-only hosting (e.g. Vercel serverless) the public dir is not
+            // writable; fall back to the URL field/existing value instead of crashing.
+            try {
+                if (! is_dir($dir)) {
+                    mkdir($dir, 0755, true);
+                }
+
+                $filename = time() . '_' . $file->hashName();
+                $file->move($dir, $filename);
+
+                return '/images/uploads/' . $filename;
+            } catch (\Throwable) {
+                // ignore and use fallback below
             }
-
-            $filename = time() . '_' . $file->hashName();
-            $file->move($dir, $filename);
-
-            return '/images/uploads/' . $filename;
         }
 
         if ($request->filled('image_url_fallback')) {

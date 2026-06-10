@@ -2,22 +2,22 @@
 
 @section('content')
     {{-- Hero --}}
-    <section class="hero-overlay relative mx-auto mt-6 grid min-h-[530px] w-[min(1480px,calc(100%-48px))] items-end gap-8 overflow-hidden rounded-lg bg-[#2a1b1a] p-10 shadow-sd-md lg:grid-cols-[minmax(0,1.02fr)_minmax(360px,0.98fr)]" id="home">
+    <section class="hero-overlay relative mx-auto mt-6 grid min-h-[440px] w-[min(1480px,calc(100%-48px))] items-end gap-7 overflow-hidden rounded-lg bg-[#2a1b1a] p-6 shadow-sd-md sm:min-h-[530px] sm:p-8 lg:grid-cols-[minmax(0,1.02fr)_minmax(360px,0.98fr)] lg:p-10" id="home">
         <div class="absolute inset-0">
             <img class="h-full w-full object-cover animate-hero-kenburns" src="https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&w=1800&q=88" alt="Ruang konseling yang tenang dengan cahaya natural">
         </div>
         <div class="relative z-[2] max-w-[710px] text-sd-surface animate-hero-rise">
             <p class="eyebrow">{{ $settings['hero_eyebrow'] }}</p>
-            <h1 class="mb-6 text-[4.2rem] leading-[1.02]">{{ $settings['hero_title'] }}</h1>
-            <p class="max-w-[650px] text-[1.16rem] leading-[1.76] text-sd-surface/85">{{ $settings['hero_subtitle'] }}</p>
+            <h1 class="mb-5 text-[2.3rem] leading-[1.08] sm:mb-6 sm:text-[3.4rem] sm:leading-[1.04] lg:text-[4.2rem] lg:leading-[1.02]">{{ $settings['hero_title'] }}</h1>
+            <p class="max-w-[650px] text-[1.02rem] leading-[1.7] text-sd-surface/85 sm:text-[1.16rem] sm:leading-[1.76]">{{ $settings['hero_subtitle'] }}</p>
             <div class="mt-7 flex flex-wrap items-center gap-3">
                 <a class="btn btn-primary" href="{{ $bookingUrl }}" target="_blank" rel="noopener">Booked Konseling</a>
                 <a class="btn btn-soft" href="{{ route('services') }}">Lihat Layanan</a>
             </div>
         </div>
-        <aside class="relative z-[2] max-w-[420px] self-end justify-self-end rounded-lg border border-white/60 bg-sd-surface/90 p-7 text-sd-ink animate-hero-rise [animation-delay:180ms]" aria-label="Ringkasan pendek">
+        <aside class="relative z-[2] w-full rounded-lg border border-white/60 bg-sd-surface/90 p-6 text-sd-ink animate-hero-rise [animation-delay:180ms] lg:max-w-[420px] lg:self-end lg:justify-self-end lg:p-7" aria-label="Ringkasan pendek">
             <span class="block text-xs font-extrabold uppercase text-sd-rose">Online dan offline</span>
-            <strong class="mt-2.5 block text-[1.38rem] leading-tight">Konseling, support group, dan sesi wellness dalam satu ekosistem.</strong>
+            <strong class="mt-2.5 block text-[1.18rem] leading-tight sm:text-[1.38rem]">Konseling, support group, dan sesi wellness dalam satu ekosistem.</strong>
         </aside>
     </section>
 
@@ -72,10 +72,10 @@
     </section>
 
     {{-- Program Utama --}}
-    <section class="mx-auto w-[min(1160px,calc(100%-48px))] py-20 reveal">
+    <section class="mx-auto w-[min(1160px,calc(100%-48px))] py-14 reveal sm:py-20">
         <div class="mb-8">
             <p class="eyebrow">Program Utama</p>
-            <h2 class="text-5xl leading-[1.08]">Empat program inti yang menemani perjalananmu.</h2>
+            <h2 class="text-3xl leading-[1.12] sm:text-4xl lg:text-5xl lg:leading-[1.08]">Empat program inti yang menemani perjalananmu.</h2>
         </div>
         @php
             $programs = [
@@ -104,11 +104,11 @@
     @php $featuredPsy = $psychologists->filter(fn ($p) => data_get($p, 'image_url'))->take(4); @endphp
     @if ($featuredPsy->count())
         <section class="border-y border-sd-ink/10 bg-sd-surface">
-            <div class="mx-auto w-[min(1160px,calc(100%-48px))] py-20 reveal">
+            <div class="mx-auto w-[min(1160px,calc(100%-48px))] py-14 reveal sm:py-20">
                 <div class="mb-8 flex flex-wrap items-end justify-between gap-4">
                     <div>
                         <p class="eyebrow">Tim Kami</p>
-                        <h2 class="text-5xl leading-[1.08]">Psikolog yang siap mendampingi.</h2>
+                        <h2 class="text-3xl leading-[1.12] sm:text-4xl lg:text-5xl lg:leading-[1.08]">Psikolog yang siap mendampingi.</h2>
                     </div>
                     <a class="btn btn-soft" href="{{ route('psychologists') }}">Lihat semua psikolog</a>
                 </div>
@@ -128,10 +128,10 @@
     @endif
 
     {{-- Page directory --}}
-    <section class="mx-auto w-[min(1160px,calc(100%-48px))] py-20 reveal">
+    <section class="mx-auto w-[min(1160px,calc(100%-48px))] py-14 reveal sm:py-20">
         <div class="mb-8">
             <p class="eyebrow">Jelajahi Selaras Diri</p>
-            <h2 class="text-5xl leading-[1.08]">Setiap halaman punya informasi yang lebih fokus.</h2>
+            <h2 class="text-3xl leading-[1.12] sm:text-4xl lg:text-5xl lg:leading-[1.08]">Setiap halaman punya informasi yang lebih fokus.</h2>
         </div>
         <div class="grid gap-4 reveal-group md:grid-cols-2 xl:grid-cols-4">
             @foreach ([

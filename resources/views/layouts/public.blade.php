@@ -11,9 +11,9 @@
 <body class="bg-sd-paper text-sd-ink">
     <a class="skip-link" href="#main">Lewati ke konten utama</a>
 
-    <header class="sticky top-0 z-20 flex min-h-20 flex-wrap items-center justify-between gap-6 border-b border-sd-ink/10 bg-sd-paper/90 px-6 py-4 backdrop-blur-xl lg:px-[max(24px,calc((100vw-1160px)/2))]" aria-label="Navigasi utama">
+    <header class="sticky top-0 z-20 flex min-h-20 flex-wrap items-center justify-between gap-4 border-b border-sd-ink/10 bg-sd-paper/90 px-4 py-3 backdrop-blur-xl sm:gap-6 sm:px-6 sm:py-4 lg:px-[max(24px,calc((100vw-1160px)/2))]" aria-label="Navigasi utama">
         <a class="flex min-w-0 items-center gap-3 font-extrabold text-sd-primary-dark" href="{{ route('home') }}" aria-label="{{ $settings['site_name'] }}">
-            <img src="/images/logo.svg" alt="{{ $settings['site_name'] }}" class="h-12 w-auto">
+            <img src="/images/logo.svg" alt="{{ $settings['site_name'] }}" class="h-10 w-auto sm:h-12">
         </a>
 
         <nav class="order-3 flex w-full items-center gap-7 overflow-x-auto pb-1 text-[0.96rem] font-bold text-sd-ink-soft lg:order-none lg:w-auto lg:overflow-visible lg:pb-0">

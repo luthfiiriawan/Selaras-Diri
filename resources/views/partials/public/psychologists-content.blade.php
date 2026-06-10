@@ -24,11 +24,11 @@
     };
 @endphp
 
-<section class="mx-auto w-[min(1160px,calc(100%-48px))] pb-24 reveal" id="psikolog">
+<section class="mx-auto w-[min(1160px,calc(100%-48px))] pb-16 reveal sm:pb-24" id="psikolog">
     <div class="mb-8 grid items-start gap-11 lg:grid-cols-[minmax(160px,0.42fr)_minmax(0,1fr)]">
         <p class="eyebrow">Psikolog</p>
         <div>
-            <h2 class="text-5xl leading-[1.08]">Pilih psikolog dari keahlian yang paling sesuai.</h2>
+            <h2 class="text-3xl leading-[1.12] sm:text-4xl lg:text-5xl lg:leading-[1.08]">Pilih psikolog dari keahlian yang paling sesuai.</h2>
             <p class="mt-5 max-w-[720px] text-sd-muted leading-[1.72]">Card dibuat ringkas agar mudah dipindai. Detail jadwal, profil, dan biaya tersedia di halaman masing-masing psikolog.</p>
         </div>
     </div>
