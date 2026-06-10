@@ -1,0 +1,20 @@
+# Runtime re-installs these, so don't upload them
+/vendor
+/node_modules
+
+# Secrets / local-only
+.env
+.env.*
+auth.json
+
+# Dev junk
+/.git
+/.github
+/tests
+/storage/logs
+/storage/framework/cache
+/storage/framework/sessions
+/storage/framework/views
+/.idea
+/.vscode
+README.md
