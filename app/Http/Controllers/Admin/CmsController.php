@@ -126,11 +126,17 @@ class CmsController extends Controller
     {
         if ($request->hasFile($fileField) && $request->file($fileField) instanceof UploadedFile) {
             $file = $request->file($fileField);
-            $dir = public_path('images/uploads');
 
-            // On read-only hosting (e.g. Vercel serverless) the public dir is not
-            // writable; fall back to the URL field/existing value instead of crashing.
+            // Prefer Vercel Blob — works on the read-only serverless filesystem
+            // and serves images via CDN.
+            $blobUrl = $this->uploadToBlob($file);
+            if ($blobUrl !== null) {
+                return $blobUrl;
+            }
+
+            // Local/dev fallback: write to the public dir when it is writable.
             try {
+                $dir = public_path('images/uploads');
                 if (! is_dir($dir)) {
                     mkdir($dir, 0755, true);
                 }
@@ -149,6 +155,52 @@ class CmsController extends Controller
         }
 
         return $existing;
+    }
+
+    /**
+     * Upload a file to Vercel Blob and return its public URL, or null when the
+     * Blob token is not configured or the upload fails.
+     */
+    private function uploadToBlob(UploadedFile $file): ?string
+    {
+        $token = config('cms.blob_token');
+
+        if (empty($token)) {
+            return null;
+        }
+
+        $contents = @file_get_contents($file->getRealPath());
+        if ($contents === false) {
+            return null;
+        }
+
+        $pathname = 'psikolog/' . $file->hashName();
+
+        $ch = curl_init('https://blob.vercel-storage.com/' . $pathname);
+        curl_setopt_array($ch, [
+            CURLOPT_CUSTOMREQUEST  => 'PUT',
+            CURLOPT_POSTFIELDS     => $contents,
+            CURLOPT_HTTPHEADER     => [
+                'authorization: Bearer ' . $token,
+                'x-api-version: 7',
+                'x-content-type: ' . ($file->getMimeType() ?: 'application/octet-stream'),
+                'x-add-random-suffix: 1',
+            ],
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT        => 20,
+        ]);
+
+        $response = curl_exec($ch);
+        $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        if ($status === 200 && is_string($response)) {
+            $data = json_decode($response, true);
+
+            return $data['url'] ?? null;
+        }
+
+        return null;
     }
 
     private function validatePsychologist(Request $request): array
