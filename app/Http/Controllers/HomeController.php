@@ -91,11 +91,13 @@ class HomeController extends Controller
         $whatsappNumber = preg_replace('/\D+/', '', $settings['whatsapp_number'] ?? '6281234567890');
         $bookingMessage = rawurlencode($settings['booking_whatsapp_message'] ?? 'Halo Selaras Diri, saya ingin booked konseling. Mohon info jadwal yang tersedia.');
         $eventMessage = rawurlencode($settings['event_whatsapp_message'] ?? 'Halo Selaras Diri, saya ingin daftar event/support group bulan ini.');
+        $curhatMessage = rawurlencode($settings['curhat_whatsapp_message'] ?? 'Halo kak, saya ingin ikut Teman Curhat Selaras. Mohon info jadwal dan kuota yang tersedia.');
 
         return array_merge([
             'settings' => $settings,
             'bookingUrl' => "https://wa.me/{$whatsappNumber}?text={$bookingMessage}",
             'eventUrl' => "https://wa.me/{$whatsappNumber}?text={$eventMessage}",
+            'curhatUrl' => "https://wa.me/{$whatsappNumber}?text={$curhatMessage}",
             'psychologists' => $this->psychologists(),
             'packages' => $this->packages(),
             'supportEvent' => $this->supportEvent(),
@@ -113,11 +115,15 @@ class HomeController extends Controller
             'email' => 'selarasdiri99@gmail.com',
             'location' => 'Jabarano Laswi dan Cimahi',
             'hero_eyebrow' => 'Mindfulness, konseling psikolog, dan komunitas suportif',
-            'hero_title' => 'Hadir penuh, pulih pelan-pelan, bertumbuh bersama.',
+            'hero_title' => 'Pulang ke diri sendiri, pulih pelan-pelan, bertumbuh bersama.',
             'hero_subtitle' => 'Selaras Diri membantu teman selaras mengenali diri, mengelola emosi, dan menemukan dukungan melalui konseling, workshop, art therapy, dan sharing circle.',
             'about_title' => 'Tentang Selaras Diri',
             'about_heading' => 'Tentang Selaras Diri',
             'about_body' => 'Selaras Diri adalah sebuah komunitas pengembangan diri yang berfokus pada peningkatan kesadaran melalui pendekatan mindfulness, Kepercayaan diri individu, serta pengembangan jejaring dukungan emosional. Kami percaya bahwa hidup yang seimbang dan bermakna berawal dari kemampuan untuk hadir sepenuhnya dalam momen kini serta kepedulian terhadap kesehatan mental diri dan orang lain. Melalui berbagai workshop, pelatihan, dan ruang praktik bersama, Selaras Diri mengajak individu untuk mengenali diri, mengelola emosi dengan bijak, dan menjadi bagian dari komunitas yang saling mendukung.',
+            'founders_eyebrow' => 'Di Balik Selaras Diri',
+            'founders_title' => 'Dibangun oleh tim yang percaya proses pulih perlu ruang aman.',
+            'founders_body' => 'Selaras Diri bertumbuh dari kepedulian untuk menghadirkan ruang yang hangat, suportif, dan mudah dijangkau. Tim ini merancang program komunitas, workshop, dan pendampingan agar setiap teman selaras bisa belajar mengenali diri dengan lebih tenang.',
+            'founders_caption' => 'Tim yang membangun dan merawat ekosistem Selaras Diri.',
             'vision_title' => 'Visi',
             'vision_body' => 'Menjadi pribadi yang berfokus pada mindfulness, pengembangan diri, kreativitas, dan keseimbangan hidup.',
             'mission_title' => 'Misi',
@@ -126,6 +132,7 @@ class HomeController extends Controller
             'booking_body' => 'Admin akan membantu memilih psikolog, format sesi online/offline/voice call, lokasi, jadwal, dan paket yang sesuai. Untuk kondisi darurat, segera hubungi layanan krisis atau fasilitas kesehatan terdekat.',
             'booking_whatsapp_message' => 'Halo Tasya, saya ingin booked konseling Selaras Diri. Mohon info jadwal psikolog yang tersedia.',
             'event_whatsapp_message' => 'Halo Tasya, saya ingin daftar event/support group Selaras Diri bulan ini.',
+            'curhat_whatsapp_message' => 'Halo kak, saya ingin ikut Teman Curhat Selaras. Mohon info jadwal dan kuota yang tersedia.',
             'footer_tagline' => 'Ruang bertumbuh, pulih, dan kembali selaras.',
         ];
     }

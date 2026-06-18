@@ -319,6 +319,10 @@ class CmsController extends Controller
             'about_title'             => ['label' => 'Judul tentang', 'type' => 'text'],
             'about_heading'           => ['label' => 'Heading tentang', 'type' => 'textarea'],
             'about_body'              => ['label' => 'Isi tentang', 'type' => 'textarea'],
+            'founders_eyebrow'        => ['label' => 'Eyebrow pendiri', 'type' => 'text'],
+            'founders_title'          => ['label' => 'Judul pendiri', 'type' => 'textarea'],
+            'founders_body'           => ['label' => 'Isi pendiri', 'type' => 'textarea'],
+            'founders_caption'        => ['label' => 'Caption foto pendiri', 'type' => 'text'],
             'vision_title'            => ['label' => 'Judul visi', 'type' => 'text'],
             'vision_body'             => ['label' => 'Isi visi', 'type' => 'textarea'],
             'mission_title'           => ['label' => 'Judul misi', 'type' => 'text'],
@@ -327,6 +331,7 @@ class CmsController extends Controller
             'booking_body'            => ['label' => 'Isi booking', 'type' => 'textarea'],
             'booking_whatsapp_message'=> ['label' => 'Pesan WA booking', 'type' => 'textarea'],
             'event_whatsapp_message'  => ['label' => 'Pesan WA event', 'type' => 'textarea'],
+            'curhat_whatsapp_message' => ['label' => 'Pesan WA Teman Curhat', 'type' => 'textarea'],
             'footer_tagline'          => ['label' => 'Tagline footer', 'type' => 'text'],
         ];
     }
