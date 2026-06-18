@@ -21,6 +21,7 @@
             <a @class(['inline-flex min-h-11 items-center whitespace-nowrap rounded-full px-3 transition-colors hover:text-sd-rose', 'bg-sd-soft text-sd-primary' => ($activeNav ?? '') === 'services']) href="{{ route('services') }}">Layanan</a>
             <a @class(['inline-flex min-h-11 items-center whitespace-nowrap rounded-full px-3 transition-colors hover:text-sd-rose', 'bg-sd-soft text-sd-primary' => ($activeNav ?? '') === 'psychologists']) href="{{ route('psychologists') }}">Psikolog</a>
             <a @class(['inline-flex min-h-11 items-center whitespace-nowrap rounded-full px-3 transition-colors hover:text-sd-rose', 'bg-sd-soft text-sd-primary' => ($activeNav ?? '') === 'events']) href="{{ route('events') }}">Event</a>
+            <a @class(['inline-flex min-h-11 items-center whitespace-nowrap rounded-full px-3 transition-colors hover:text-sd-rose', 'bg-sd-soft text-sd-primary' => ($activeNav ?? '') === 'recommendation']) href="{{ route('recommendation.quiz') }}">Cek Kebutuhan</a>
         </nav>
 
         <a class="btn btn-soft" href="{{ $bookingUrl }}" target="_blank" rel="noopener">Booked Konseling</a>
