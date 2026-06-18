@@ -10,6 +10,22 @@
     </div>
 </section>
 
+<section class="mx-auto grid w-[min(1160px,calc(100%-48px))] items-center gap-8 py-14 reveal-group sm:py-20 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-14">
+    <div class="max-w-[560px] reveal">
+        <p class="eyebrow">{{ $settings['founders_eyebrow'] }}</p>
+        <h2 class="mt-3 max-w-[520px] text-3xl leading-[1.12] sm:text-4xl lg:text-[3rem] lg:leading-[1.05]">{{ $settings['founders_title'] }}</h2>
+        <p class="mt-5 text-[1.04rem] leading-[1.75] text-sd-muted">{{ $settings['founders_body'] }}</p>
+    </div>
+    <figure class="relative reveal">
+        <div class="absolute -inset-4 -z-10 rounded-lg bg-sd-rose/10"></div>
+        <picture>
+            <source srcset="/images/about/tim-pendiri-selaras-diri.webp" type="image/webp">
+            <img class="aspect-[1.52/1] w-full rounded-lg border border-sd-ink/10 object-cover object-center shadow-sd-md" src="/images/about/tim-pendiri-selaras-diri.jpg" width="1200" height="791" alt="Tim yang membangun Selaras Diri" loading="lazy">
+        </picture>
+        <figcaption class="mt-4 max-w-[620px] text-sm font-semibold leading-relaxed text-sd-muted">{{ $settings['founders_caption'] }}</figcaption>
+    </figure>
+</section>
+
 <section class="mx-auto grid w-[min(1160px,calc(100%-48px))] gap-4 py-14 reveal-group sm:py-24 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)]">
     <article class="rounded-lg border border-sd-ink/10 bg-sd-primary p-8 text-sd-surface reveal">
         <p class="block text-xs font-extrabold uppercase text-[#ffd0c8]">{{ $settings['vision_title'] }}</p>

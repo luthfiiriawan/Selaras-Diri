@@ -16,12 +16,12 @@
             <img src="/images/logo.svg" alt="{{ $settings['site_name'] }}" class="h-10 w-auto sm:h-12">
         </a>
 
-        <nav class="order-3 flex w-full items-center gap-7 overflow-x-auto pb-1 text-[0.96rem] font-bold text-sd-ink-soft lg:order-none lg:w-auto lg:overflow-visible lg:pb-0">
-            <a @class(['inline-flex min-h-11 items-center whitespace-nowrap rounded-full px-3 transition-colors hover:text-sd-rose', 'bg-sd-soft text-sd-primary' => ($activeNav ?? '') === 'about']) href="{{ route('about') }}">Tentang</a>
-            <a @class(['inline-flex min-h-11 items-center whitespace-nowrap rounded-full px-3 transition-colors hover:text-sd-rose', 'bg-sd-soft text-sd-primary' => ($activeNav ?? '') === 'services']) href="{{ route('services') }}">Layanan</a>
-            <a @class(['inline-flex min-h-11 items-center whitespace-nowrap rounded-full px-3 transition-colors hover:text-sd-rose', 'bg-sd-soft text-sd-primary' => ($activeNav ?? '') === 'psychologists']) href="{{ route('psychologists') }}">Psikolog</a>
-            <a @class(['inline-flex min-h-11 items-center whitespace-nowrap rounded-full px-3 transition-colors hover:text-sd-rose', 'bg-sd-soft text-sd-primary' => ($activeNav ?? '') === 'events']) href="{{ route('events') }}">Event</a>
-            <a @class(['inline-flex min-h-11 items-center whitespace-nowrap rounded-full px-3 transition-colors hover:text-sd-rose', 'bg-sd-soft text-sd-primary' => ($activeNav ?? '') === 'recommendation']) href="{{ route('recommendation.quiz') }}">Cek Kebutuhan</a>
+        <nav class="order-3 flex w-full items-center gap-4 overflow-x-auto pb-1 text-[0.96rem] font-bold text-sd-ink-soft [scrollbar-width:none] sm:gap-7 lg:order-none lg:w-auto lg:overflow-visible lg:pb-0 [&::-webkit-scrollbar]:hidden">
+            <a @class(['inline-flex min-h-11 items-center whitespace-nowrap rounded-full px-2.5 transition-colors hover:text-sd-rose sm:px-3', 'bg-sd-soft text-sd-primary' => ($activeNav ?? '') === 'about']) href="{{ route('about') }}">Tentang</a>
+            <a @class(['inline-flex min-h-11 items-center whitespace-nowrap rounded-full px-2.5 transition-colors hover:text-sd-rose sm:px-3', 'bg-sd-soft text-sd-primary' => ($activeNav ?? '') === 'services']) href="{{ route('services') }}">Layanan</a>
+            <a @class(['inline-flex min-h-11 items-center whitespace-nowrap rounded-full px-2.5 transition-colors hover:text-sd-rose sm:px-3', 'bg-sd-soft text-sd-primary' => ($activeNav ?? '') === 'psychologists']) href="{{ route('psychologists') }}">Psikolog</a>
+            <a @class(['inline-flex min-h-11 items-center whitespace-nowrap rounded-full px-2.5 transition-colors hover:text-sd-rose sm:px-3', 'bg-sd-soft text-sd-primary' => ($activeNav ?? '') === 'events']) href="{{ route('events') }}">Event</a>
+            <a @class(['inline-flex min-h-11 items-center whitespace-nowrap rounded-full px-2.5 transition-colors hover:text-sd-rose sm:px-3', 'bg-sd-soft text-sd-primary' => ($activeNav ?? '') === 'recommendation']) href="{{ route('recommendation.quiz') }}">Cek Kebutuhan</a>
         </nav>
 
         <a class="btn btn-soft" href="{{ $bookingUrl }}" target="_blank" rel="noopener">Booked Konseling</a>

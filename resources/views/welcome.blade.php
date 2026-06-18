@@ -1,10 +1,25 @@
 @extends('layouts.public')
 
 @section('content')
+    @php
+        $heroSlides = [
+            '/images/home/hero-carousel-01.webp' => '/images/home/hero-carousel-01.jpg',
+            '/images/home/hero-carousel-02.webp' => '/images/home/hero-carousel-02.jpg',
+            '/images/home/hero-carousel-03.webp' => '/images/home/hero-carousel-03.jpg',
+            '/images/home/hero-carousel-04.webp' => '/images/home/hero-carousel-04.jpg',
+            '/images/home/hero-carousel-05.webp' => '/images/home/hero-carousel-05.jpg',
+        ];
+    @endphp
+
     {{-- Hero --}}
     <section class="hero-overlay relative mx-auto mt-6 grid min-h-[440px] w-[min(1480px,calc(100%-48px))] items-end gap-7 overflow-hidden rounded-lg bg-[#2a1b1a] p-6 shadow-sd-md sm:min-h-[530px] sm:p-8 lg:grid-cols-[minmax(0,1.02fr)_minmax(360px,0.98fr)] lg:p-10" id="home">
-        <div class="absolute inset-0">
-            <img class="h-full w-full object-cover animate-hero-kenburns" src="https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&w=1800&q=88" alt="Ruang konseling yang tenang dengan cahaya natural">
+        <div class="absolute inset-0" data-hero-carousel data-hero-interval="6500" aria-hidden="true">
+            @foreach ($heroSlides as $webp => $jpg)
+                <picture class="hero-slide pointer-events-none absolute inset-0 transition-opacity duration-1000 ease-out will-change-[opacity] {{ $loop->first ? 'is-active z-[1] opacity-100' : 'opacity-0' }}" data-hero-slide>
+                    <source srcset="{{ $webp }}" type="image/webp">
+                    <img class="h-full w-full scale-[1.04] object-cover object-center {{ $loop->first ? 'animate-hero-kenburns' : '' }}" src="{{ $jpg }}" width="1600" height="700" alt="" @if ($loop->first) fetchpriority="high" @else loading="lazy" decoding="async" @endif>
+                </picture>
+            @endforeach
         </div>
         <div class="relative z-[2] max-w-[710px] text-sd-surface animate-hero-rise">
             <p class="eyebrow">{{ $settings['hero_eyebrow'] }}</p>
@@ -15,7 +30,7 @@
                 <a class="btn btn-soft" href="{{ route('services') }}">Lihat Layanan</a>
             </div>
         </div>
-        <aside class="relative z-[2] w-full rounded-lg border border-white/60 bg-sd-surface/90 p-6 text-sd-ink animate-hero-rise [animation-delay:180ms] lg:max-w-[420px] lg:self-end lg:justify-self-end lg:p-7" aria-label="Ringkasan pendek">
+        <aside class="relative z-[2] w-full rounded-lg border border-white/60 bg-sd-surface p-6 text-sd-ink shadow-sd-md animate-hero-rise [animation-delay:180ms] lg:max-w-[420px] lg:self-end lg:justify-self-end lg:p-7" aria-label="Ringkasan pendek">
             <span class="block text-xs font-extrabold uppercase text-sd-rose">Online dan offline</span>
             <strong class="mt-2.5 block text-[1.18rem] leading-tight sm:text-[1.38rem]">Konseling, support group, dan sesi wellness dalam satu ekosistem.</strong>
         </aside>
@@ -31,16 +46,17 @@
     </section>
 
     {{-- Intro strip --}}
-    <section class="mx-auto grid w-[min(1160px,calc(100%-48px))] gap-px pb-20 pt-12 reveal-group md:grid-cols-3" aria-label="Ringkasan layanan">
+    <section class="mx-auto grid w-[min(1160px,calc(100%-48px))] gap-3 pb-20 pt-12 reveal-group sm:grid-cols-2 lg:grid-cols-4 lg:gap-px" aria-label="Ringkasan layanan">
         @php
             $intro = [
                 ['01', 'Konseling personal', 'Sesi terarah bersama psikolog untuk kebutuhan personal, relasi, keluarga, dan tumbuh kembang.', 'M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z'],
-                ['02', 'Support group', 'Ruang berbagi bulanan yang difasilitasi agar peserta merasa aman, didengar, dan tidak sendirian.', 'M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6 5.87a4 4 0 100-8 4 4 0 000 8zm6-9a3 3 0 11-6 0 3 3 0 016 0z'],
-                ['03', 'Wellness event', 'Trekking, art therapy, workshop, webinar, barre, yoga, dan padel session untuk merawat tubuh-pikiran.', 'M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z'],
+                ['02', 'Teman Curhat Selaras', 'Sesi curhat gratis bersama konselor internal Selaras untuk didengar, menata pikiran, dan menemukan langkah awal.', 'M8 10h8M8 14h5m8-2c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z'],
+                ['03', 'Support group', 'Ruang berbagi bulanan yang difasilitasi agar peserta merasa aman, didengar, dan tidak sendirian.', 'M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6 5.87a4 4 0 100-8 4 4 0 000 8zm6-9a3 3 0 11-6 0 3 3 0 016 0z'],
+                ['04', 'Wellness event', 'Trekking, art therapy, workshop, webinar, barre, yoga, dan padel session untuk merawat tubuh-pikiran.', 'M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z'],
             ];
         @endphp
         @foreach ($intro as $i => [$num, $title, $desc, $icon])
-            <div class="reveal min-h-48 border border-sd-ink/10 bg-sd-surface p-7 {{ $i === 0 ? 'rounded-l-lg' : '' }} {{ $i === 2 ? 'rounded-r-lg' : '' }} max-md:rounded-lg">
+            <div class="reveal min-h-48 rounded-lg border border-sd-ink/10 bg-sd-surface p-7 lg:rounded-none {{ $i === 0 ? 'lg:rounded-l-lg' : '' }} {{ $i === count($intro) - 1 ? 'lg:rounded-r-lg' : '' }}">
                 <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-sd-soft text-sd-primary">
                     <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $icon }}"/></svg>
                 </div>
