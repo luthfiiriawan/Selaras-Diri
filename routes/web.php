@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CmsController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RecommendationQuizController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
@@ -11,6 +12,8 @@ Route::get('/layanan', [HomeController::class, 'services'])->name('services');
 Route::get('/psikolog', [HomeController::class, 'psychologistsPage'])->name('psychologists');
 Route::get('/psikolog/{psychologist}/{slug?}', [HomeController::class, 'psychologistDetail'])->name('psychologists.show');
 Route::get('/event', [HomeController::class, 'events'])->name('events');
+Route::get('/kuis-rekomendasi', [RecommendationQuizController::class, 'show'])->name('recommendation.quiz');
+Route::post('/kuis-rekomendasi', [RecommendationQuizController::class, 'submit'])->name('recommendation.quiz.submit');
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/login', [AuthController::class, 'show'])->name('login');

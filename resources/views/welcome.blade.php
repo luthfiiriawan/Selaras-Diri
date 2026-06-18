@@ -51,6 +51,8 @@
         @endforeach
     </section>
 
+    @include('partials.public.recommendation-teaser')
+
     {{-- Stats strip --}}
     <section class="bg-gradient-to-br from-sd-soft to-sd-paper" aria-label="Selaras Diri dalam angka">
         <div class="mx-auto grid w-[min(1160px,calc(100%-48px))] gap-8 py-12 reveal-group sm:grid-cols-2 lg:grid-cols-4">
