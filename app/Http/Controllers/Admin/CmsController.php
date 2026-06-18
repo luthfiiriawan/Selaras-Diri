@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\HomeController;
+use App\Helpers\Google2FA;
 use App\Models\CounselingPackage;
 use App\Models\Event;
 use App\Models\Psychologist;
@@ -26,6 +27,8 @@ class CmsController extends Controller
             'psychologists' => Psychologist::query()->orderBy('sort_order')->orderBy('name')->get(),
             'packages' => CounselingPackage::query()->orderBy('sort_order')->orderBy('title')->get(),
             'events' => Event::query()->orderBy('type')->orderBy('sort_order')->orderBy('title')->get(),
+            'twoFactorConfirmed' => SiteSetting::query()->where('key', 'two_factor_confirmed')->value('value') === '1',
+            'twoFactorSecret' => SiteSetting::query()->where('key', 'two_factor_secret')->value('value'),
         ]);
     }
 
@@ -45,6 +48,51 @@ class CmsController extends Controller
         }
 
         return back()->with('status', 'Konten utama berhasil diperbarui.');
+    }
+
+    public function generate2faSecret(Request $request): RedirectResponse
+    {
+        $secret = Google2FA::generateSecretKey();
+
+        SiteSetting::query()->updateOrCreate(
+            ['key' => 'two_factor_secret'],
+            ['value' => $secret, 'group' => 'security']
+        );
+
+        SiteSetting::query()->updateOrCreate(
+            ['key' => 'two_factor_confirmed'],
+            ['value' => '0', 'group' => 'security']
+        );
+
+        return back()->with('status', 'Berhasil membuat kunci rahasia 2FA baru. Silakan konfirmasi.');
+    }
+
+    public function enable2fa(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'code' => ['required', 'string', 'size:6'],
+        ]);
+
+        $secret = SiteSetting::query()->where('key', 'two_factor_secret')->value('value');
+
+        if (! $secret || ! Google2FA::verifyCode($secret, $request->input('code'))) {
+            return back()->withErrors(['two_factor_code' => 'Kode verifikasi OTP tidak cocok. Silakan coba lagi.']);
+        }
+
+        SiteSetting::query()->updateOrCreate(
+            ['key' => 'two_factor_confirmed'],
+            ['value' => '1', 'group' => 'security']
+        );
+
+        return back()->with('status', 'Otentikasi Dua Faktor (2FA) berhasil diaktifkan.');
+    }
+
+    public function disable2fa(Request $request): RedirectResponse
+    {
+        SiteSetting::query()->where('key', 'two_factor_confirmed')->delete();
+        SiteSetting::query()->where('key', 'two_factor_secret')->delete();
+
+        return back()->with('status', 'Otentikasi Dua Faktor (2FA) telah dinonaktifkan.');
     }
 
     public function storePsychologist(Request $request): RedirectResponse

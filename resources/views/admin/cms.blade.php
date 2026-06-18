@@ -40,6 +40,10 @@
             Event
             <span class="ml-auto rounded-full bg-sd-soft px-2.5 py-0.5 text-xs font-extrabold text-sd-primary">{{ $events->count() }}</span>
         </a>
+        <a class="flex min-h-12 items-center gap-2.5 rounded-lg border border-transparent px-3.5 font-extrabold text-sd-ink-soft transition-colors hover:border-sd-ink/10 hover:bg-sd-paper" href="#keamanan">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+            Keamanan 2FA
+        </a>
     </nav>
 
     <form class="mt-auto" action="{{ route('admin.logout') }}" method="POST">
@@ -381,6 +385,80 @@
         @else
             <p class="rounded-lg bg-sd-surface p-8 text-center text-sm font-bold text-sd-muted shadow-sd-sm">Belum ada event. Tambahkan yang pertama di atas.</p>
         @endif
+    </section>
+
+    {{-- ══ Keamanan 2FA ══ --}}
+    <section class="py-7" id="keamanan">
+        <p class="eyebrow">05</p>
+        <h2 class="m-0 mb-1 font-serif text-[2.05rem] leading-tight">Keamanan Dua Faktor (2FA)</h2>
+        <p class="mb-4 text-sm text-sd-muted">Tingkatkan keamanan login admin dengan Google Authenticator.</p>
+
+        <div class="rounded-lg border border-sd-ink/10 bg-sd-surface p-6 shadow-sd-sm">
+            @if ($twoFactorConfirmed)
+                <div class="flex flex-col gap-4">
+                    <div class="flex items-center gap-3 text-emerald-700">
+                        <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                        <strong class="text-lg">Otentikasi Dua Faktor (2FA) Aktif</strong>
+                    </div>
+                    <p class="text-sm text-sd-muted leading-relaxed">
+                        Saat ini, akun admin dilindungi dengan 2FA. Setiap kali login, Anda harus memasukkan kode OTP 6-digit dari aplikasi Google Authenticator Anda.
+                    </p>
+                    <form action="{{ route('admin.2fa.disable') }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menonaktifkan Otentikasi Dua Faktor (2FA)? Keamanan akun Anda akan berkurang.')">
+                        @csrf
+                        <button type="submit" class="btn btn-primary bg-sd-rose text-white hover:bg-sd-rose/90">Nonaktifkan 2FA</button>
+                    </form>
+                </div>
+            @else
+                <div class="flex flex-col gap-6">
+                    <div class="flex items-center gap-3 text-sd-muted">
+                        <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                        <strong class="text-lg">Otentikasi Dua Faktor (2FA) Belum Aktif</strong>
+                    </div>
+                    <p class="text-sm text-sd-muted leading-relaxed">
+                        Aktifkan 2FA untuk melindungi panel admin dari akses yang tidak sah. Kami merekomendasikan penggunaan aplikasi seperti Google Authenticator di HP Anda.
+                    </p>
+
+                    @if ($twoFactorSecret)
+                        <div class="rounded-lg border border-sd-primary/10 bg-sd-soft/30 p-5">
+                            <strong class="block text-sd-primary-dark mb-3">Langkah Setup 2FA:</strong>
+                            <ol class="list-decimal list-inside text-sm text-sd-ink-soft space-y-2.5">
+                                <li>Buka aplikasi <strong>Google Authenticator</strong> (atau Authenticator lainnya) di HP Anda.</li>
+                                <li>Pilih opsi tambah akun (tanda <strong class="text-sd-primary">+</strong>) lalu pilih <strong>"Enter a setup key"</strong> / <strong>"Masukkan kunci pengaturan"</strong>.</li>
+                                <li>
+                                    Masukkan detail akun berikut:
+                                    <div class="mt-2 grid gap-2 rounded border border-sd-ink/5 bg-white p-3 font-mono text-xs text-sd-ink">
+                                        <div><strong>Nama Akun:</strong> Selaras Diri ({{ config('cms.admin_email') }})</div>
+                                        <div class="flex items-center gap-2">
+                                            <strong>Kunci Kriptografi (Secret Key):</strong>
+                                            <span class="bg-sd-soft px-2 py-0.5 font-bold text-sm tracking-wider text-sd-primary select-all">{{ $twoFactorSecret }}</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>Aplikasi di HP Anda akan mulai menghasilkan kode verifikasi 6-digit.</li>
+                                <li>Masukkan kode verifikasi yang sedang aktif saat ini ke kotak di bawah untuk mengaktifkan:</li>
+                            </ol>
+
+                            <form action="{{ route('admin.2fa.enable') }}" method="POST" class="mt-5 flex flex-wrap items-end gap-3">
+                                @csrf
+                                <label class="grid gap-1.5 text-xs font-extrabold text-sd-ink-soft">
+                                    <span>Kode Verifikasi 6-Digit</span>
+                                    <input type="text" name="code" class="min-h-11 w-[160px] rounded border border-sd-ink/10 bg-white px-3 font-mono text-center text-lg font-bold tracking-widest text-sd-ink" placeholder="123456" maxlength="6" required>
+                                </label>
+                                <button type="submit" class="btn btn-primary min-h-11">Verifikasi & Aktifkan</button>
+                            </form>
+                            @error('two_factor_code')
+                                <p class="mt-2 text-xs font-bold text-sd-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    @else
+                        <form action="{{ route('admin.2fa.generate') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn btn-primary">Aktifkan 2FA</button>
+                        </form>
+                    @endif
+                </div>
+            @endif
+        </div>
     </section>
 
 </main>

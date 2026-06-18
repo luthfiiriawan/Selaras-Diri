@@ -19,9 +19,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/login', [AuthController::class, 'show'])->name('login');
     Route::post('/login', [AuthController::class, 'authenticate'])->name('authenticate');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('/login/2fa', [AuthController::class, 'show2fa'])->name('login.2fa');
+    Route::post('/login/2fa', [AuthController::class, 'verify2fa'])->name('login.2fa.verify');
 
     Route::middleware('cms.auth')->group(function () {
         Route::get('/', [CmsController::class, 'index'])->name('dashboard');
+        Route::post('/2fa/generate', [CmsController::class, 'generate2faSecret'])->name('2fa.generate');
+        Route::post('/2fa/enable', [CmsController::class, 'enable2fa'])->name('2fa.enable');
+        Route::post('/2fa/disable', [CmsController::class, 'disable2fa'])->name('2fa.disable');
         Route::put('/settings', [CmsController::class, 'updateSettings'])->name('settings.update');
 
         Route::post('/psychologists', [CmsController::class, 'storePsychologist'])->name('psychologists.store');
